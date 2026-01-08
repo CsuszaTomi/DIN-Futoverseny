@@ -1,0 +1,1 @@
+https://trello.com/invite/b/695fa167c3de9dbfa5b6da7a/ATTI53606eda8994f425c2a700924aae1bcc70CE51BF/din-futoverseny
