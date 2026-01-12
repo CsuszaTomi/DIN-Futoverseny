@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DIN_Futóverseny
+namespace DIN_Futóverseny.Models
 {
-    internal class Program
+    internal class Edzes
     {
-        static void Main(string[] args)
-        {
-
-        }
     }
 }
