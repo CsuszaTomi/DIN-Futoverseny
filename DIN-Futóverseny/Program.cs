@@ -1,6 +1,7 @@
 ﻿using DIN_Futóverseny.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,9 @@ namespace DIN_Futóverseny
                 int m_pulzus=int.Parse(Console.ReadLine());
 
                 Edzes_adatok adat = new Edzes_adatok(datum,tav,idotartam,m_pulzus);
+
+                string kiirni = $"{datum};{tav};{idotartam};{m_pulzus}" ;
+                File.AppendAllText("adatok.txt", kiirni);
                 adatok.Add(adat);
             }
             catch  (Exception e)
