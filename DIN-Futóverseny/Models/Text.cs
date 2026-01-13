@@ -79,7 +79,7 @@ namespace DIN_Futóverseny.Models
             {
                 Console.Clear();
                 Text.WriteLineCentered(title, "red");
-                Text.WriteLineCentered("===================");
+                Text.WriteLineCentered("------------------");
                 for (int i = 0; i < menupoints.Length; i++)
                 {
                     if (i == currentPoint)
@@ -91,7 +91,7 @@ namespace DIN_Futóverseny.Models
                         Text.WriteLineCentered($"  {menupoints[i]}");
                     }
                 }
-                Text.WriteLineCentered("===================");
+                Text.WriteLineCentered("------------------");
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Enter:
