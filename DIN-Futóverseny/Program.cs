@@ -26,11 +26,29 @@ namespace DIN_Futóverseny
                         Users = UserActions.Register(Users);
                         break;
                     case 1:
-                        bool belepes = UserActions.Login(Users);
-                        if (belepes)
+                        loggeduser = UserActions.Login(Users);
+                        if (loggeduser != null)
                         {
                             Text.WriteLine("Sikeres belépés!", "green");
+                            
                             Thread.Sleep(2000);
+                            bool exit = false;
+                            while (!exit)
+                            {
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új edzés rögzítése", "Edzés statisztika", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                switch (edzesMenu)
+                                {
+                                    case 0:
+                                        VersenyAdafelvetel();
+                                        break;
+                                    case 1:
+                                        //Statisztika megjelenítése
+                                        break;
+                                    case 2:
+                                        exit = true;
+                                        break;
+                                }
+                            }
                         }
                         else
                         {

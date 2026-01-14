@@ -10,14 +10,28 @@ namespace DIN_Futóverseny.Controllers
 {
     internal class UserActions
     {
+
         public static List<Users> GetUsers()
         {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
+            string filePath = Path.Combine(projectPath, "users.txt");
             List<Users> users = new List<Users>();
-            string[] sorok = File.ReadAllLines("users.txt");
+            string[] sorok = File.ReadAllLines(filePath);
             foreach (string sor in sorok)
             {
-                  users.Add(new Users(sor));
+                if (string.IsNullOrWhiteSpace(sor)) continue;
+
+                try
+                {
+                    users.Add(new Users(sor));
+                }
+                catch
+                {
+                    Text.WriteLine($"Hibás adat a felhasználók között: {sor}", "yellow");
+                }
             }
+
             return users;
         }
 
@@ -42,13 +56,12 @@ namespace DIN_Futóverseny.Controllers
             double altcel = double.Parse(Console.ReadLine());
             Users newUser = new Users(nev,jelszo, szuldatum, testsuly, magassag, nyugpul, altcel);
             users.Add(newUser);
-            string kiirni = $"{nev};{jelszo};{szuldatum.ToString("yyyy-MM-dd")};{testsuly};{magassag};{nyugpul};{altcel}";
-            File.AppendAllText("users.txt", kiirni);
             Text.WriteLine("Sikeres regisztráció!", "green");
+            UserSave(users);
             return users;
         }
 
-        public static bool Login(List<Users> users)
+        public static Users Login(List<Users> users)
         {
             Console.Clear();
             Text.WriteLine("Belépés", "red");
@@ -60,9 +73,24 @@ namespace DIN_Futóverseny.Controllers
             foreach (Users user in users)
             {
                 if (user.Jelszo == bjelszo && user.Nev == bnev)
-                    return true;
+                {
+                    return user;
+                }
             }
-            return false;
+            return null;
+        }
+
+        public static void UserSave(List<Users> users)
+        {
+            List<string> sorok = new List<string>();
+            foreach (Users user in users)
+            {
+                sorok.Add($"{user.Nev};{user.Jelszo};{user.Szuldatum.ToString("yyyy-MM-dd")};{user.Testsuly};{user.Magassag};{user.Nyugpul};{user.Altcel}");
+            }
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
+            string filePath = Path.Combine(projectPath, "users.txt");
+            File.WriteAllLines(filePath, sorok, System.Text.Encoding.UTF8);
         }
     }
 }
