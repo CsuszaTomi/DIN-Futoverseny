@@ -9,16 +9,17 @@ namespace DIN_Futóverseny.Models
     internal class Text
     {
         /// <summary>
-        /// A függvény a Console.WriteLine középre íratását valósítja meg
+        /// A Console.WriteLine középre íratása
         /// </summary>
-        /// <param name="text">A megadott szöveget írja ki középre</param>
-        public static void WriteLineCentered(string text, string szin = "")
+        /// <param name="szoveg">A kiírandó szöveg</param>
+        /// <param name="szin">A kiírandó szöveg színe</param>
+        public static void WriteLine(string szoveg, string szin = "")
         // Console.WriteLine középre íratása
         {
-            int leftPadding = (Console.WindowWidth - text.Length) / 2;
-            if (leftPadding < 0)
+            int balszokoz = (Console.WindowWidth - szoveg.Length) / 2;
+            if (balszokoz < 0)
             {
-                leftPadding = 0;
+                balszokoz = 0;
             }
             if (szin != "")
             {
@@ -31,15 +32,19 @@ namespace DIN_Futóverseny.Models
             }
             else
                 Console.ForegroundColor = ConsoleColor.White;
-            Console.WriteLine(new string(' ', leftPadding) + text);
+            Console.WriteLine(new string(' ', balszokoz) + szoveg);
         }
-        public static void WriteCentered(string text, string szin = "")
-        // Console.Write középre íratása
+        /// <summary>
+        /// A Console.Write középre íratása
+        /// </summary>
+        /// <param name="szoveg">A kiírandó szöveg</param>
+        /// <param name="szin">A kiírandó szöveg színe</param>
+        public static void Write(string szoveg, string szin = "")
         {
-            int leftPadding = (Console.WindowWidth - text.Length) / 2;
-            if (leftPadding < 0)
+            int ballszokoz = (Console.WindowWidth - szoveg.Length) / 2;
+            if (ballszokoz < 0)
             {
-                leftPadding = 0;
+                ballszokoz = 0;
             }
             if (szin != "")
             {
@@ -52,72 +57,61 @@ namespace DIN_Futóverseny.Models
             }
             else
                 Console.ForegroundColor = ConsoleColor.White;
-            Console.Write(new string(' ', leftPadding) + text);
-        }
-
-        public static string CenterText(string text, int width)
-        {
-            if (text.Length > width)
-                text = text.Substring(0, width);
-
-            int left = (width - text.Length) / 2;
-            int right = width - text.Length - left;
-
-            return new string(' ', left) + text + new string(' ', right);
+            Console.Write(new string(' ', ballszokoz) + szoveg);
         }
         /// <summary>
         /// Menü kezelő függvény
         /// </summary>
-        /// <param name="menupoints">Menüpontok amiket létrehoz</param>
-        /// <param name="title">A menü címe</param>
+        /// <param name="menupontok">Menüpontok amiket létrehoz</param>
+        /// <param name="cím">A menü címe</param>
         /// <returns></returns>
-        public static int ArrowMenu(string[] menupoints, string title)
+        public static int ArrowMenu(string[] menupontok, string cím)
         {
-            int currentPoint = 0;
-            bool selected = false;
+            int kivalasztottmenupont = 0;
+            bool valasztott = false;
             do
             {
                 Console.Clear();
-                Text.WriteLineCentered(title, "red");
-                Text.WriteLineCentered("------------------");
-                for (int i = 0; i < menupoints.Length; i++)
+                Text.WriteLine(cím, "red");
+                Text.WriteLine("------------------");
+                for (int i = 0; i < menupontok.Length; i++)
                 {
-                    if (i == currentPoint)
+                    if (i == kivalasztottmenupont)
                     {
-                        Text.WriteLineCentered($"> {menupoints[i]}", "green");
+                        Text.WriteLine($"> {menupontok[i]}", "green");
                     }
                     else
                     {
-                        Text.WriteLineCentered($"  {menupoints[i]}");
+                        Text.WriteLine($"  {menupontok[i]}");
                     }
                 }
-                Text.WriteLineCentered("------------------");
+                Text.WriteLine("------------------");
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Enter:
-                        selected = true;
+                        valasztott = true;
                         break;
                     case ConsoleKey.E:
-                        selected = true;
+                        valasztott = true;
                         break;
                     case ConsoleKey.UpArrow:
-                        if (currentPoint > 0) currentPoint--;
+                        if (kivalasztottmenupont > 0) kivalasztottmenupont--;
                         break;
                     case ConsoleKey.W:
-                        if (currentPoint > 0) currentPoint--;
+                        if (kivalasztottmenupont > 0) kivalasztottmenupont--;
                         break;
                     case ConsoleKey.DownArrow:
-                        if (currentPoint < menupoints.Length - 1) currentPoint++;
+                        if (kivalasztottmenupont < menupontok.Length - 1) kivalasztottmenupont++;
                         break;
                     case ConsoleKey.S:
-                        if (currentPoint < menupoints.Length - 1) currentPoint++;
+                        if (kivalasztottmenupont < menupontok.Length - 1) kivalasztottmenupont++;
                         break;
                     default:
                         Console.Beep();
                         break;
                 }
-            } while (!selected);
-            return currentPoint;
+            } while (!valasztott);
+            return kivalasztottmenupont;
         }
     }
 }

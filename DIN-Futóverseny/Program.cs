@@ -29,12 +29,12 @@ namespace DIN_Futóverseny
                         bool belepes = UserActions.Login(Users);
                         if (belepes)
                         {
-                            Text.WriteLineCentered("Sikeres belépés!", "green");
+                            Text.WriteLine("Sikeres belépés!", "green");
                             Thread.Sleep(2000);
                         }
                         else
                         {
-                            Text.WriteLineCentered("Sikertelen belépés!", "red");
+                            Text.WriteLine("Sikertelen belépés!", "red");
                             Thread.Sleep(2000);
                         }
                         break;
@@ -44,7 +44,6 @@ namespace DIN_Futóverseny
                 }
             }
         }
-
         private static void VersenyAdafelvetel()
         {
             try

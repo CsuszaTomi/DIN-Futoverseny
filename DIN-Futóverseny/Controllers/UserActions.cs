@@ -24,38 +24,38 @@ namespace DIN_Futóverseny.Controllers
         public static List<Users> Register(List<Users> users)
         {
             Console.Clear();
-            Text.WriteLineCentered("Regisztráció", "red");
-            Text.WriteLineCentered("--------------------");
-            Text.WriteCentered("Név: ");
+            Text.WriteLine("Regisztráció", "red");
+            Text.WriteLine("--------------------");
+            Text.Write("Név: ");
             string nev = Console.ReadLine();
-            Text.WriteCentered("Jelszó: ");
+            Text.Write("Jelszó: ");
             string jelszo = Console.ReadLine();
-            Text.WriteCentered("Születési dátum (yyyy-mm-dd): ");
+            Text.Write("Születési dátum (yyyy-mm-dd): ");
             DateTime szuldatum = DateTime.Parse(Console.ReadLine());
-            Text.WriteCentered("Testsúly (kg): ");
+            Text.Write("Testsúly (kg): ");
             double testsuly = double.Parse(Console.ReadLine());
-            Text.WriteCentered("Magasság (cm): ");
+            Text.Write("Magasság (cm): ");
             double magassag = double.Parse(Console.ReadLine());
-            Text.WriteCentered("Nyugalmi pulzus (bpm): ");
+            Text.Write("Nyugalmi pulzus (bpm): ");
             double nyugpul = double.Parse(Console.ReadLine());
-            Text.WriteCentered("Általános futás cél km-ben: ");
+            Text.Write("Általános futás cél km-ben: ");
             double altcel = double.Parse(Console.ReadLine());
             Users newUser = new Users(nev,jelszo, szuldatum, testsuly, magassag, nyugpul, altcel);
             users.Add(newUser);
             string kiirni = $"{nev};{jelszo};{szuldatum.ToString("yyyy-MM-dd")};{testsuly};{magassag};{nyugpul};{altcel}";
             File.AppendAllText("users.txt", kiirni);
-            Text.WriteLineCentered("Sikeres regisztráció!", "green");
+            Text.WriteLine("Sikeres regisztráció!", "green");
             return users;
         }
 
         public static bool Login(List<Users> users)
         {
             Console.Clear();
-            Text.WriteLineCentered("Belépés", "red");
-            Text.WriteLineCentered("--------------------");
-            Text.WriteCentered("Add meg a nevet: ");
+            Text.WriteLine("Belépés", "red");
+            Text.WriteLine("--------------------");
+            Text.Write("Add meg a nevet: ");
             string bnev = Console.ReadLine();
-            Text.WriteCentered("Add meg a jelszót: ");
+            Text.Write("Add meg a jelszót: ");
             string bjelszo = Console.ReadLine();
             foreach (Users user in users)
             {
