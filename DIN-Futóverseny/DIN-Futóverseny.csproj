@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Controllers\EdzesAdatfeldolgozas.cs" />
     <Compile Include="Controllers\Ellenorzo.cs" />
+    <Compile Include="Controllers\Settings.cs" />
     <Compile Include="Controllers\UserActions.cs" />
     <Compile Include="Models\Edzes_adatok.cs" />
     <Compile Include="View\Text.cs" />
