@@ -76,11 +76,14 @@ namespace DIN_Futóverseny.Controllers
         {
             try
             {
-               
                 string[] sorok = File.ReadAllLines("adatok.txt");
+                Console.WriteLine("Fut.");
+                Console.ReadLine();
                 List<string> adatok = new List<string>();
+                Console.WriteLine(sorok[0]);
                 foreach (string sor in sorok)
                 {
+                    Console.WriteLine(sor);
                     string[] adatok_egysorban = sor.Split(';');
                     if (adatok_egysorban[0] == username)
                     {
@@ -106,6 +109,7 @@ namespace DIN_Futóverseny.Controllers
             catch (Exception e)
             {
                 Console.WriteLine("Hiba történt: ", e);
+                Console.WriteLine(e);
                 Console.ReadLine();
             }
 
