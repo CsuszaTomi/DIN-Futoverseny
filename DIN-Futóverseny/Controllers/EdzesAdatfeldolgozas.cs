@@ -26,28 +26,44 @@ namespace DIN_Futóverseny.Controllers
         {
             try
             {
-                Console.WriteLine("Felhasználó adatatinak felvitele!: ");
-                Console.WriteLine("Kérem a dátumot (yyyy-mm-dd) formátumban: ");
+                Text.WriteLine("Felhasználó adatatinak felvitele!: ");
+                Text.WriteLine("Kérem a dátumot (yyyy-mm-dd) formátumban: ");
                 //DateTime datum = DateTime.Parse(Console.ReadLine());
-                string datumproba = Console.ReadLine();
-                while(!Ellenorzo.DateTimeEllenorzo(datumproba))
+                string datum = Console.ReadLine();
+                while(!Ellenorzo.DateTimeEllenorzo(datum))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ");
+                    datum = Console.ReadLine();
                 }
 
-                Console.WriteLine("Kérem a tavolságot: ");
-                decimal tav = decimal.Parse(Console.ReadLine());
+                Text.WriteLine("Kérem a tavolságot: ");
+                string tav = (Console.ReadLine());
+                while (!Ellenorzo.DecimalSzamEllenorzo(tav))
+                {
+                    Text.Write("Hibás formátum! Add meg újra: ");
+                    tav = Console.ReadLine();
+                }
 
-                Console.WriteLine("Kérem az időtatamot (óó:pp:mm) formátumban: ");
-                TimeSpan idotartam = TimeSpan.Parse(Console.ReadLine());
+                Text.WriteLine("Kérem az időtatamot (óó:pp:mm) formátumban: ");
+                string idotartam = Console.ReadLine();
+                while(!Ellenorzo.TimeSpanEllenorzo(idotartam))
+                {
+                    Text.Write("Hibás formátum! Add meg újra: ");
+                    idotartam = Console.ReadLine();
+                }
 
-                Console.WriteLine("Kérem a maximális pulzus adatot: ");
-                int m_pulzus = int.Parse(Console.ReadLine());
+                Text.WriteLine("Kérem a maximális pulzus adatot: ");
+                string m_pulzus = Console.ReadLine();
+                while (!Ellenorzo.IntSzamEllenorzo(m_pulzus))
+                {
+                    Text.Write("Hibás formátum! Add meg újra: ");
+                    m_pulzus = Console.ReadLine();
+                }
 
-                Edzes_adatok adat = new Edzes_adatok(DateTime.Parse(datumproba), tav, idotartam, m_pulzus);
+                Edzes_adatok adat = new Edzes_adatok(DateTime.Parse(datum), Decimal.Parse(tav), TimeSpan.Parse(idotartam),int.Parse( m_pulzus));
 
-                EdzesSave(adatok, user);
                 adatok.Add(adat);
+                EdzesSave(adatok, user);
             }
             catch (Exception e)
             {

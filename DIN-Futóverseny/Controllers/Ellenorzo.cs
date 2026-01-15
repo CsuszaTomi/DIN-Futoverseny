@@ -46,5 +46,18 @@ namespace DIN_Futóverseny.Controllers
                 return false;
             }
         }
+
+        public static bool TimeSpanEllenorzo(string span)
+        {
+            TimeSpan ki = TimeSpan.Zero;
+            if (TimeSpan.TryParse(span, out ki))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
