@@ -43,6 +43,7 @@ namespace DIN_Futóverseny
                                         break;
                                     case 1:
                                         //Statisztika megjelenítése
+                                        EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev);
                                         break;
                                     case 2:
                                         exit = true;
