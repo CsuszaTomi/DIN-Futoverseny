@@ -119,6 +119,7 @@ namespace DIN_Futóverseny.Controllers
                         adatok.Add(adatok_egysorban[1]);
                         adatok.Add(adatok_egysorban[2]);
                         adatok.Add(adatok_egysorban[3]);
+                        adatok.Add(adatok_egysorban[4]);
                     }
 
 
