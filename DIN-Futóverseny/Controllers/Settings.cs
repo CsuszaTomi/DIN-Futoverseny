@@ -9,8 +9,8 @@ namespace DIN_Futóverseny.Controllers
 {
     internal class Settings
     {
-        int actionDelay = 2000;
-        bool delayEnabled = false;
+        static int actionDelay = 2000;
+        static bool delayEnabled = false;
 
         public Settings(int actionDelay, bool delayEnabled)
         {
@@ -18,19 +18,14 @@ namespace DIN_Futóverseny.Controllers
             DelayEnabled = delayEnabled;
         }
 
-        public int ActionDelay { get => actionDelay; set => actionDelay = value; }
-        public bool DelayEnabled { get => delayEnabled; set => delayEnabled = value; }
+        static public  int ActionDelay { get => actionDelay; set => actionDelay = value; }
+        static public bool DelayEnabled { get => delayEnabled; set => delayEnabled = value; }
 
-        public static void Menu(Users loggeduser, List<Users> Users)
+        /// <summary>
+        /// A beállítások menü kezelő függvénye
+        /// </summary>
+        public static void Menu()
         {
-            if (loggeduser == null)
-            {
-                Console.Clear();
-                Text.WriteLine("Kérem jelentkezzen be a beállítások eléréséhez!", "yellow");
-                Text.WriteLine("Vissza a főmenübe...", "yellow");
-                System.Threading.Thread.Sleep(2000);
-                return;
-            }
             bool exit = false;
             while (!exit)
             {
@@ -41,13 +36,60 @@ namespace DIN_Futóverseny.Controllers
                         Console.Clear();
                         Text.WriteLine("Delay beállítások", "red");
                         Text.WriteLine("--------------------");
-                        Text.Write("Ha nem akar valamit módosítani akkor nyomjon arra szóközt!", "yellow");
-                        //Text.Write($"Kérem adja meg a delay időt milliszekundumban(Mostani: {ActionDelay}): ");
+                        Text.WriteLine("Ha nem akar valamit módosítani akkor nyomjon arra szóközt!", "yellow");
+                        Text.Write("Szeretné engedélyezni a delay-t? (i/n): ");
+                        string delayInput = Console.ReadLine();
+                        if (delayInput.ToLower() == "i")
+                        {
+                            DelayEnabled = true;
+                            Text.WriteLine("Delay engedélyezve.", "green");
+                        }
+                        else if (delayInput.ToLower() == "n")
+                        {
+                            DelayEnabled = false;
+                            Text.WriteLine("Delay letiltva.", "green");
+                        }
+                        else if (delayInput != " " && delayInput != "")
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            Text.WriteLine("Hibás bemenet! Kérem 'i' vagy 'n' értéket adjon meg!", "red");
+                        }
+                        if (delayEnabled)
+                        {
+                            Text.Write($"Kérem adja meg a delay időt milliszekundumban(Mostani: {ActionDelay}): ");
+                            string input = Console.ReadLine();
+                            if (input != " " && input != "")
+                            {
+                                if (int.TryParse(input, out int newDelay))
+                                {
+                                    ActionDelay = newDelay;
+                                    Text.WriteLine($"Sikeres módosítás! Új delay idő: {ActionDelay} ms", "green");
+                                }
+                                else
+                                {
+                                    Text.WriteLine("Hibás bemenet! Kérem számot adjon meg!", "red");
+                                }
+                            }
+                        }
                         break;
                     case 1:
                         exit = true;
                         break;
                 }
+            }
+        }
+
+        /// <summary>
+        /// A thread.delay függvény meghívása, ha a delay engedélyezve van
+        /// </summary>
+        public static void Delay()
+        {
+            if (DelayEnabled)
+            {
+                System.Threading.Thread.Sleep(ActionDelay);
             }
         }
     }

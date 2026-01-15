@@ -31,11 +31,11 @@ namespace DIN_Futóverseny
                         {
                             Text.WriteLine("Sikeres belépés!", "green");
                             
-                            Thread.Sleep(2000);
+                            Settings.Delay();
                             bool exit = false;
                             while (!exit)
                             {
-                                int edzesMenu = Text.ArrowMenu(new string[] { "Új edzés rögzítése", "Edzés statisztika", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futás statisztikák","Futás műveletek", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
                                 switch (edzesMenu)
                                 {
                                     case 0:
@@ -43,10 +43,12 @@ namespace DIN_Futóverseny
                                         EdzesekAdatfeldolgozas.EdzesSave(adatok,loggeduser);
                                         break;
                                     case 1:
-                                        //Statisztika megjelenítése
+                                        //Statisztika megjelenítése 
                                         EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev);
                                         break;
                                     case 2:
+                                        break;
+                                    case 3:
                                         exit = true;
                                         break;
                                 }
@@ -55,11 +57,11 @@ namespace DIN_Futóverseny
                         else
                         {
                             Text.WriteLine("Sikertelen belépés!", "red");
-                            Thread.Sleep(2000);
+                            Settings.Delay();
                         }
                         break;
                     case 2:
-                        Settings.Menu(loggeduser, Users);
+                        Settings.Menu();
                         break;
                     case 3:
                         Environment.Exit(0);
