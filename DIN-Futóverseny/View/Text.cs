@@ -73,7 +73,7 @@ namespace DIN_Futóverseny.Models
             {
                 Console.Clear();
                 Text.WriteLine(cím, "red");
-                Text.WriteLine("------------------");
+                Text.WriteLine("====================");
                 for (int i = 0; i < menupontok.Length; i++)
                 {
                     if (i == kivalasztottmenupont)
@@ -85,7 +85,7 @@ namespace DIN_Futóverseny.Models
                         Text.WriteLine($"  {menupontok[i]}");
                     }
                 }
-                Text.WriteLine("------------------");
+                Text.WriteLine("====================");
                 switch (Console.ReadKey(true).Key)
                 {
                     case ConsoleKey.Enter:

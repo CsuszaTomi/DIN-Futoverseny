@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DIN_Futóverseny.Models;
+using DIN_Futóverseny.View;
 
 namespace DIN_Futóverseny.Controllers
 {
@@ -20,7 +21,7 @@ namespace DIN_Futóverseny.Controllers
             List<string> sorok = new List<string>();
             foreach (Edzes_adatok edzes in adatok)
             {
-                sorok.Add($"{user.Nev};{edzes.Datum};{edzes.Tavolsag};{edzes.Idotartam};{edzes.Max_pulzus}");
+                sorok.Add($"{user.Nev};{edzes.Datum.ToShortDateString()};{edzes.Tavolsag};{edzes.Idotartam};{edzes.Max_pulzus}");
             }
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
             string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
@@ -40,6 +41,23 @@ namespace DIN_Futóverseny.Controllers
             string filePath = Path.Combine(projectPath, "adatok.txt");
             string[] sorok = File.ReadAllLines(filePath, System.Text.Encoding.UTF8);
             return sorok;
+        }
+
+        public static List<Edzes_adatok> EdzesFeldolgozo()
+        {
+            string[] sorok = EdzesBeolvasó();
+            List<Edzes_adatok> edzesek = new List<Edzes_adatok>();
+            foreach (string sor in sorok)
+            {
+                string[] adatok = sor.Split(';');
+                string nev = adatok[0];
+                DateTime datum = DateTime.Parse(adatok[1]);
+                decimal tavolsag = Decimal.Parse(adatok[2]);
+                TimeSpan idotartam = TimeSpan.Parse(adatok[3]);
+                int max_pulzus = int.Parse(adatok[4]);
+                edzesek.Add(new Edzes_adatok(datum, tavolsag, idotartam, max_pulzus));
+            }
+            return edzesek;
         }
 
         /// <summary>
@@ -126,22 +144,22 @@ namespace DIN_Futóverseny.Controllers
 
 
                 }
-                Console.WriteLine("---------------------------------------------------------------------");
-                for (int i = 0; i < adatok.Count / 4; i++)
-                {
+                //Console.WriteLine("---------------------------------------------------------------------");
+                //for (int i = 0; i < adatok.Count / 4; i++)
+                //{
                 
 
-                    string adat1 = adatok[i * 4 + 0]; 
-                    string adat2 = adatok[i * 4 + 1]; 
-                    string adat3 = adatok[i * 4 + 2]; 
-                    string adat4 = adatok[i * 4 + 3]; 
+                //    string adat1 = adatok[i * 4 + 0]; 
+                //    string adat2 = adatok[i * 4 + 1]; 
+                //    string adat3 = adatok[i * 4 + 2]; 
+                //    string adat4 = adatok[i * 4 + 3]; 
 
-                    // Kiíratás táblázatosan
-                    Console.WriteLine($"| {adat1,-15} | {adat2,-15} | {adat3,-10} | {adat4,-10} |");
-                }
-                Console.WriteLine("---------------------------------------------------------------------");
-                Console.WriteLine();
-
+                //    // Kiíratás táblázatosan
+                //    Console.WriteLine($"| {adat1,-15} | {adat2,-15} | {adat3,-10} | {adat4,-10} |");
+                //}
+                //Console.WriteLine("---------------------------------------------------------------------");
+                Tables.Table(new string[] {"Dátum","Távolság(km)", "Idő tartam(ó:p:m)","Max pulzus" }, adatok.ToArray());
+                Text.WriteLine("");
                 Console.ReadLine();
             }
             catch (Exception e)

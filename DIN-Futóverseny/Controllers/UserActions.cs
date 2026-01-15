@@ -1,6 +1,7 @@
 ﻿using DIN_Futóverseny.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,22 +40,64 @@ namespace DIN_Futóverseny.Controllers
         {
             Console.Clear();
             Text.WriteLine("Regisztráció", "red");
-            Text.WriteLine("--------------------");
+            Text.WriteLine("====================");
             Text.Write("Név: ");
             string nev = Console.ReadLine();
+            while(!Ellenorzo.UressegEllenorzo(nev))
+            {
+                Text.WriteLine("A név nem lehet üres!", "red");
+                Text.Write("Név: ");
+                nev = Console.ReadLine();
+            }
             Text.Write("Jelszó: ");
             string jelszo = Console.ReadLine();
+            while (!Ellenorzo.UressegEllenorzo(jelszo))
+            {
+                Text.WriteLine("A jelszó nem lehet üres!", "red");
+                Text.Write("Jelszó: ");
+                jelszo = Console.ReadLine();
+            }
             Text.Write("Születési dátum (yyyy-mm-dd): ");
-            DateTime szuldatum = DateTime.Parse(Console.ReadLine());
+            string szuldatum = Console.ReadLine();
+            while (!Ellenorzo.DateTimeEllenorzo(szuldatum))
+            {
+                Text.WriteLine("Érvénytelen születési dátum!", "red");
+                Text.Write("Születési dátum (yyyy-mm-dd): ");
+                szuldatum = Console.ReadLine();
+            }
             Text.Write("Testsúly (kg): ");
-            double testsuly = double.Parse(Console.ReadLine());
+            string testsuly = Console.ReadLine();
+            while (!Ellenorzo.DoubleEllenorzo(testsuly))
+            {
+                Text.WriteLine("Érvénytelen testsúly!", "red");
+                Text.Write("Testsúly (kg): ");
+                testsuly = Console.ReadLine();
+            }
             Text.Write("Magasság (cm): ");
-            double magassag = double.Parse(Console.ReadLine());
+            string magassag = Console.ReadLine();
+            while (!Ellenorzo.DoubleEllenorzo(magassag))
+            {
+                Text.WriteLine("Érvénytelen magasság!", "red");
+                Text.Write("Magasság (cm): ");
+                magassag = Console.ReadLine();
+            }
             Text.Write("Nyugalmi pulzus (bpm): ");
-            double nyugpul = double.Parse(Console.ReadLine());
+            string nyugpul = Console.ReadLine();
+            while (!Ellenorzo.DoubleEllenorzo(nyugpul))
+            {
+                Text.WriteLine("Érvénytelen nyugalmi pulzus!", "red");
+                Text.Write("Nyugalmi pulzus (bpm): ");
+                nyugpul = Console.ReadLine();
+            }
             Text.Write("Általános futás cél km-ben: ");
-            double altcel = double.Parse(Console.ReadLine());
-            Users newUser = new Users(nev,jelszo, szuldatum, testsuly, magassag, nyugpul, altcel);
+            string altcel = Console.ReadLine();
+            while (!Ellenorzo.DoubleEllenorzo(altcel))
+            {
+                Text.WriteLine("Érvénytelen általános futás cél!", "red");
+                Text.Write("Általános futás cél km-ben: ");
+                altcel = Console.ReadLine();
+            }
+            Users newUser = new Users(nev,jelszo, DateTime.Parse(szuldatum), double.Parse(testsuly), double.Parse(magassag), double.Parse(nyugpul), double.Parse(altcel));
             users.Add(newUser);
             Text.WriteLine("Sikeres regisztráció!", "green");
             UserSave(users);
@@ -65,7 +108,7 @@ namespace DIN_Futóverseny.Controllers
         {
             Console.Clear();
             Text.WriteLine("Belépés", "red");
-            Text.WriteLine("--------------------");
+            Text.WriteLine("====================");
             Text.Write("Add meg a nevet: ");
             string bnev = Console.ReadLine();
             Text.Write("Add meg a jelszót: ");

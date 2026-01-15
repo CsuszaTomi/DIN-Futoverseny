@@ -12,7 +12,7 @@ namespace DIN_Futóverseny
 {
     internal class Program
     {
-        static List<Edzes_adatok> adatok = new List<Edzes_adatok>();
+        static List<Edzes_adatok> adatok = EdzesekAdatfeldolgozas.EdzesFeldolgozo();
         static Users loggeduser = null;
         static List<Users> Users = UserActions.GetUsers();
         static void Main(string[] args)

@@ -8,6 +8,17 @@ namespace DIN_Futóverseny.Controllers
 {
     internal class Ellenorzo
     {
+        public static bool UressegEllenorzo(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input) || input == "" || input == " ")
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         public static bool IntSzamEllenorzo(string szam)
         {
             int ki = 0;
@@ -25,6 +36,19 @@ namespace DIN_Futóverseny.Controllers
         {
             decimal ki = 0;
             if (decimal.TryParse(szam, out ki))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static bool DoubleEllenorzo(string szam)
+        {
+            double ki = 0;
+            if (double.TryParse(szam, out ki))
             {
                 return true;
             }

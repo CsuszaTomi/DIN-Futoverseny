@@ -35,7 +35,7 @@ namespace DIN_Futóverseny.Controllers
                     case 0:
                         Console.Clear();
                         Text.WriteLine("Delay beállítások", "red");
-                        Text.WriteLine("--------------------");
+                        Text.WriteLine("====================");
                         Text.WriteLine("Ha nem akar valamit módosítani akkor nyomjon arra szóközt!", "yellow");
                         Text.Write("Szeretné engedélyezni a delay-t? (i/n): ");
                         string delayInput = Console.ReadLine();

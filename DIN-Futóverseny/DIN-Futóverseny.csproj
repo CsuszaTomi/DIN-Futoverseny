@@ -48,6 +48,7 @@
     <Compile Include="Controllers\Settings.cs" />
     <Compile Include="Controllers\UserActions.cs" />
     <Compile Include="Models\Edzes_adatok.cs" />
+    <Compile Include="View\Tables.cs" />
     <Compile Include="View\Text.cs" />
     <Compile Include="Models\Users.cs" />
     <Compile Include="Program.cs" />
