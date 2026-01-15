@@ -47,7 +47,7 @@ namespace DIN_Futóverseny.Controllers
         /// </summary>
         /// <param name="adatok">Az edzés adatok lista</param>
         /// <param name="user">A bejelentkezett felhasználó</param>
-        public static void VersenyAdafelvetel(List<Edzes_adatok> adatok,Users user)
+        public static List<Edzes_adatok> VersenyAdafelvetel(List<Edzes_adatok> adatok,Users user)
         {
             try
             {
@@ -88,13 +88,13 @@ namespace DIN_Futóverseny.Controllers
                 }
 
                 Edzes_adatok adat = new Edzes_adatok(DateTime.Parse(datum), Decimal.Parse(tav), TimeSpan.Parse(idotartam),int.Parse( m_pulzus));
-
                 adatok.Add(adat);
-                EdzesSave(adatok, user);
+                return adatok;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Hiba történt: ", e);
+                return null;
             }
         }
 

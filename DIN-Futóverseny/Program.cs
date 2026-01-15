@@ -39,7 +39,8 @@ namespace DIN_Futóverseny
                                 switch (edzesMenu)
                                 {
                                     case 0:
-                                        EdzesekAdatfeldolgozas.VersenyAdafelvetel(adatok,loggeduser);
+                                        adatok = EdzesekAdatfeldolgozas.VersenyAdafelvetel(adatok,loggeduser);
+                                        EdzesekAdatfeldolgozas.EdzesSave(adatok,loggeduser);
                                         break;
                                     case 1:
                                         //Statisztika megjelenítése
@@ -58,7 +59,7 @@ namespace DIN_Futóverseny
                         }
                         break;
                     case 2:
-                        //UserActions.Settings(loggeduser, Users);
+                        Settings.Menu(loggeduser, Users);
                         break;
                     case 3:
                         Environment.Exit(0);
