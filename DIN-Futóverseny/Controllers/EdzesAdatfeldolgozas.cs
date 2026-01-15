@@ -10,6 +10,11 @@ namespace DIN_Futóverseny.Controllers
 {
     internal class EdzesekAdatfeldolgozas
     {
+        /// <summary>
+        /// Edzés adatok mentése fájlba
+        /// </summary>
+        /// <param name="adatok">Az edzés adatok lista</param>
+        /// <param name="user">A bejelentkezett felhasználó</param>
         public static void EdzesSave(List<Edzes_adatok> adatok,Users user)
         {
             List<string> sorok = new List<string>();
@@ -22,41 +27,63 @@ namespace DIN_Futóverseny.Controllers
             string filePath = Path.Combine(projectPath, "adatok.txt");
             File.WriteAllLines(filePath, sorok, System.Text.Encoding.UTF8);
         }
+
+        /// <summary>
+        /// Edzés adatok beolvasása fájlból
+        /// </summary>
+        /// <returns>A beolvasott sorokat</returns>
+
+        public static string[] EdzesBeolvasó()
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
+            string filePath = Path.Combine(projectPath, "adatok.txt");
+            string[] sorok = File.ReadAllLines(filePath, System.Text.Encoding.UTF8);
+            return sorok;
+        }
+
+        /// <summary>
+        /// Edzés adatainak felvétele
+        /// </summary>
+        /// <param name="adatok">Az edzés adatok lista</param>
+        /// <param name="user">A bejelentkezett felhasználó</param>
         public static void VersenyAdafelvetel(List<Edzes_adatok> adatok,Users user)
         {
             try
             {
-                Text.WriteLine("Felhasználó adatatinak felvitele!: ");
-                Text.WriteLine("Kérem a dátumot (yyyy-mm-dd) formátumban: ");
+                Console.Clear();
+                Text.WriteLine("Futás adatainak felvétele", "red");
+                Text.WriteLine("--------------------");
+                Text.Write("Kérem a dátumot (yyyy-mm-dd) formátumban: ");
                 //DateTime datum = DateTime.Parse(Console.ReadLine());
                 string datum = Console.ReadLine();
                 while(!Ellenorzo.DateTimeEllenorzo(datum))
                 {
-                    Text.Write("Hibás formátum! Add meg újra: ");
+                    Text.Write("Hibás formátum! Add meg újra: ","red");
                     datum = Console.ReadLine();
                 }
 
-                Text.WriteLine("Kérem a tavolságot: ");
+                Text.Write("Kérem a tavolságot: ");
                 string tav = (Console.ReadLine());
                 while (!Ellenorzo.DecimalSzamEllenorzo(tav))
                 {
-                    Text.Write("Hibás formátum! Add meg újra: ");
+                    Text.Write("Hibás formátum! Add meg újra: ", "red");
                     tav = Console.ReadLine();
                 }
 
-                Text.WriteLine("Kérem az időtatamot (óó:pp:mm) formátumban: ");
+                Text.Write("Kérem az időtatamot (óó:pp:mm) formátumban: ");
                 string idotartam = Console.ReadLine();
                 while(!Ellenorzo.TimeSpanEllenorzo(idotartam))
                 {
-                    Text.Write("Hibás formátum! Add meg újra: ");
+                    Text.Write("Hibás formátum! Add meg újra: ", "red");
                     idotartam = Console.ReadLine();
                 }
 
-                Text.WriteLine("Kérem a maximális pulzus adatot: ");
+                Text.Write("Kérem a maximális pulzus adatot: ");
                 string m_pulzus = Console.ReadLine();
                 while (!Ellenorzo.IntSzamEllenorzo(m_pulzus))
                 {
-                    Text.Write("Hibás formátum! Add meg újra: ");
+                    Text.Write("Hibás formátum! Add meg újra: ", "red");
                     m_pulzus = Console.ReadLine();
                 }
 
@@ -71,13 +98,16 @@ namespace DIN_Futóverseny.Controllers
             }
         }
 
-
+        /// <summary>
+        /// Edzés adatok megjelenítése
+        /// </summary>
+        /// <param name="username">A bejelentkezett felhasználó neve</param>
         public static void Megjelenites(string username)
         {
             try
             {
                
-                string[] sorok = File.ReadAllLines("adatok.txt");
+                string[] sorok = EdzesBeolvasó();
                 List<string> adatok = new List<string>();
                 foreach (string sor in sorok)
                 {
