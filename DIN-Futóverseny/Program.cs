@@ -19,7 +19,7 @@ namespace DIN_Futóverseny
         {
             while (true)
             {
-                int menu = Text.ArrowMenu(new string[] { "Regisztrálás", "Belépés", "Kilépés" }, "FUTÁS NYILVÁNTARTÓ");
+                int menu = Text.ArrowMenu(new string[] { "Új fiók", "Bejelentkezés", "Kilépés" }, "Futás Nyilvántartó");
                 switch(menu)
                 {
                     case 0:
