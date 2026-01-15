@@ -109,10 +109,10 @@ namespace DIN_Futóverseny.Controllers
                
                 string[] sorok = EdzesBeolvasó();
                 List<string> adatok = new List<string>();
-                Console.WriteLine(sorok[0]);
+           
                 foreach (string sor in sorok)
                 {
-                    Console.WriteLine(sor);
+                   
                     string[] adatok_egysorban = sor.Split(';');
                     if (adatok_egysorban[0] == username)
                     {
