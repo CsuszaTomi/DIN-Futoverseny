@@ -70,5 +70,45 @@ namespace DIN_Futóverseny.Controllers
                 Console.WriteLine("Hiba történt: ", e);
             }
         }
+
+
+        public static void Megjelenites(string username)
+        {
+            try
+            {
+               
+                string[] sorok = File.ReadAllLines("adatok.txt");
+                List<string> adatok = new List<string>();
+                foreach (string sor in sorok)
+                {
+                    string[] adatok_egysorban = sor.Split(';');
+                    if (adatok_egysorban[0] == username)
+                    {
+                        adatok.Add(adatok_egysorban[1]);
+                        adatok.Add(adatok_egysorban[2]);
+                        adatok.Add(adatok_egysorban[3]);
+                    }
+
+
+
+
+                }
+                
+                foreach (string s in adatok)
+                {
+                    Console.WriteLine(s);
+                }
+                Console.WriteLine(username);
+                Console.WriteLine();
+
+                Console.ReadLine();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Hiba történt: ", e);
+                Console.ReadLine();
+            }
+
+        }
     }
 }
