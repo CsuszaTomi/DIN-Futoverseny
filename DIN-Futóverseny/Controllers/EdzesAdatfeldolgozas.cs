@@ -126,12 +126,20 @@ namespace DIN_Futóverseny.Controllers
 
 
                 }
-                
-                foreach (string s in adatok)
+                Console.WriteLine("---------------------------------------------------------------------");
+                for (int i = 0; i < adatok.Count / 4; i++)
                 {
-                    Console.WriteLine(s);
+                
+
+                    string adat1 = adatok[i * 4 + 0]; 
+                    string adat2 = adatok[i * 4 + 1]; 
+                    string adat3 = adatok[i * 4 + 2]; 
+                    string adat4 = adatok[i * 4 + 3]; 
+
+                    // Kiíratás táblázatosan
+                    Console.WriteLine($"| {adat1,-15} | {adat2,-15} | {adat3,-10} | {adat4,-10} |");
                 }
-                Console.WriteLine(username);
+                Console.WriteLine("---------------------------------------------------------------------");
                 Console.WriteLine();
 
                 Console.ReadLine();
