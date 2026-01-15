@@ -8,9 +8,21 @@ using DIN_Futóverseny.Models;
 
 namespace DIN_Futóverseny.Controllers
 {
-    internal class EdzesekAdatfeldolgozás
+    internal class EdzesekAdatfeldolgozas
     {
-        public static void VersenyAdafelvetel(List<Edzes_adatok> adatok)
+        public static void EdzesSave(List<Edzes_adatok> adatok,Users user)
+        {
+            List<string> sorok = new List<string>();
+            foreach (Edzes_adatok edzes in adatok)
+            {
+                sorok.Add($"{user.Nev};{edzes.Datum};{edzes.Tavolsag};{edzes.Idotartam};{edzes.Max_pulzus}");
+            }
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
+            string filePath = Path.Combine(projectPath, "adatok.txt");
+            File.WriteAllLines(filePath, sorok, System.Text.Encoding.UTF8);
+        }
+        public static void VersenyAdafelvetel(List<Edzes_adatok> adatok,Users user)
         {
             try
             {
@@ -29,8 +41,7 @@ namespace DIN_Futóverseny.Controllers
 
                 Edzes_adatok adat = new Edzes_adatok(datum, tav, idotartam, m_pulzus);
 
-                string kiirni = $"{datum};{tav};{idotartam};{m_pulzus}";
-                File.AppendAllText("adatok.txt", kiirni);
+                EdzesSave(adatok, user);
                 adatok.Add(adat);
             }
             catch (Exception e)

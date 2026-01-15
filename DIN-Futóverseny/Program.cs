@@ -39,7 +39,7 @@ namespace DIN_Futóverseny
                                 switch (edzesMenu)
                                 {
                                     case 0:
-                                        EdzesekAdatfeldolgozás.VersenyAdafelvetel(adatok);
+                                        EdzesekAdatfeldolgozas.VersenyAdafelvetel(adatok);
                                         break;
                                     case 1:
                                         //Statisztika megjelenítése
