@@ -39,7 +39,7 @@ namespace DIN_Futóverseny
                                 switch (edzesMenu)
                                 {
                                     case 0:
-                                        VersenyAdafelvetel();
+                                        EdzesekAdatfeldolgozás.VersenyAdafelvetel(adatok);
                                         break;
                                     case 1:
                                         //Statisztika megjelenítése
@@ -60,34 +60,6 @@ namespace DIN_Futóverseny
                         Environment.Exit(0);
                         break;
                 }
-            }
-        }
-        private static void VersenyAdafelvetel()
-        {
-            try
-            {
-                Console.WriteLine("Felhasználó adatatinak felvitele!: ");
-                Console.WriteLine("Kérem a dátumot (yyyy-mm-dd) formátumban: ");
-                DateTime datum = DateTime.Parse(Console.ReadLine());
-
-                Console.WriteLine("Kérem a tavolságot: ");
-                decimal tav = decimal.Parse(Console.ReadLine());
-
-                Console.WriteLine("Kérem az időtatamot (óó:pp:mm) formátumban: ");
-                TimeSpan idotartam = TimeSpan.Parse(Console.ReadLine());
-
-                Console.WriteLine("Kérem a maximális pulzus adatot: ");
-                int m_pulzus = int.Parse(Console.ReadLine());
-
-                Edzes_adatok adat = new Edzes_adatok(datum, tav, idotartam, m_pulzus);
-
-                string kiirni = $"{datum};{tav};{idotartam};{m_pulzus}";
-                File.AppendAllText("adatok.txt", kiirni);
-                adatok.Add(adat);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Hiba történt: ", e);
             }
         }
     }

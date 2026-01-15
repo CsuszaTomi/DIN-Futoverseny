@@ -8,7 +8,7 @@ using DIN_Futóverseny.Models;
 
 namespace DIN_Futóverseny.Controllers
 {
-    internal class Edzesek
+    internal class EdzesekAdatfeldolgozás
     {
         public static void VersenyAdafelvetel(List<Edzes_adatok> adatok)
         {
