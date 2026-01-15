@@ -28,7 +28,12 @@ namespace DIN_Futóverseny.Controllers
             {
                 Console.WriteLine("Felhasználó adatatinak felvitele!: ");
                 Console.WriteLine("Kérem a dátumot (yyyy-mm-dd) formátumban: ");
-                DateTime datum = DateTime.Parse(Console.ReadLine());
+                //DateTime datum = DateTime.Parse(Console.ReadLine());
+                string datumproba = Console.ReadLine();
+                while(!Ellenorzo.DateTimeEllenorzo(datumproba))
+                {
+                    Text.Write("Hibás formátum! Add meg újra: ");
+                }
 
                 Console.WriteLine("Kérem a tavolságot: ");
                 decimal tav = decimal.Parse(Console.ReadLine());
@@ -39,7 +44,7 @@ namespace DIN_Futóverseny.Controllers
                 Console.WriteLine("Kérem a maximális pulzus adatot: ");
                 int m_pulzus = int.Parse(Console.ReadLine());
 
-                Edzes_adatok adat = new Edzes_adatok(datum, tav, idotartam, m_pulzus);
+                Edzes_adatok adat = new Edzes_adatok(DateTime.Parse(datumproba), tav, idotartam, m_pulzus);
 
                 EdzesSave(adatok, user);
                 adatok.Add(adat);
