@@ -277,5 +277,10 @@ namespace DIN_Futóverseny.Controllers
                 Console.WriteLine("Hiba történt: " + e.Message);
             }
         }
+
+        public static void Modosit()
+        {
+
+        }
     }
 }
