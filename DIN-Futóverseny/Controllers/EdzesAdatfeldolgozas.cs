@@ -473,5 +473,26 @@ namespace DIN_Futóverseny.Controllers
             }
             Console.ReadLine() ;    
         }
+       
+        public static void Szamlalo(Users user)
+        {
+            List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
+
+            int hanyszor = 0;
+            
+            foreach(var edzes in osszesEdzes)
+            {
+                if(edzes.Nev == user.Nev)
+                {
+                    if ((decimal)user.Altcel <=edzes.Tavolsag)
+                        {
+                            hanyszor++;
+                        }
+                }
+                
+            }
+            Console.WriteLine($"{hanyszor} alkalommal érted el a célod!");
+            Console.ReadLine();
+        }
     }
 }

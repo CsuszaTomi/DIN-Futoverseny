@@ -65,6 +65,7 @@ namespace DIN_Futóverseny
                                     case 7:
                                         EdzesekAdatfeldolgozas.Atlagsebessegvaltozasa(loggeduser.Nev);
                                         break;
+                                    
                                     case 8:
                                         exit = true;
                                         break;
