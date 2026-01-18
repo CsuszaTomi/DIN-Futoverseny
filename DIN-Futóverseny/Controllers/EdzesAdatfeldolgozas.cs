@@ -1,11 +1,12 @@
-﻿using System;
+﻿using DIN_Futóverseny.Models;
+using DIN_Futóverseny.View;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using DIN_Futóverseny.Models;
-using DIN_Futóverseny.View;
 
 namespace DIN_Futóverseny.Controllers
 {
@@ -423,7 +424,10 @@ namespace DIN_Futóverseny.Controllers
             List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
             foreach (var edzes in osszesEdzes)
             {
-                osszeg+=edzes.Tavolsag;
+                if (username == edzes.Nev)
+                {
+                    osszeg += edzes.Tavolsag;
+                }
             }
 
 
@@ -434,7 +438,40 @@ namespace DIN_Futóverseny.Controllers
 
         public static void Atlagsebessegvaltozasa(string username)
         {
+            List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
 
+
+            List<Edzes_adatok> sajatEdzesek = new List<Edzes_adatok>();
+            foreach (var edzes in osszesEdzes)
+            {
+                if (edzes.Nev == username) sajatEdzesek.Add(edzes);
+            }
+
+            for (int i = 0; i < sajatEdzesek.Count; i++) 
+            {
+                double mostani = EdzesAtlagSebesseg(sajatEdzesek[i]);
+                Console.WriteLine($"{i+1}. futás átlagsebessége: {mostani:F2} km/h");
+                if (i > 0)
+                {
+                    double elozo = EdzesAtlagSebesseg(sajatEdzesek[i - 1]);
+                    if (mostani > elozo)
+                    {
+                        Console.WriteLine($"Ez az előzőhöz képest: {mostani-elozo:F2}-vel jobb");
+                    }
+                    else if (mostani < elozo)
+                    {
+                        Console.WriteLine($"Ez az előzőhöz képest: {(mostani - elozo) * -1:F2}-vel rosszabb");
+                    }
+                    else
+                    {
+
+                        Console.WriteLine("megegyezik az előzővel" +
+                            "");
+                    }
+
+                }
+            }
+            Console.ReadLine() ;    
         }
     }
 }
