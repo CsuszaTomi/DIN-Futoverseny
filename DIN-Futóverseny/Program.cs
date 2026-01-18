@@ -35,7 +35,7 @@ namespace DIN_Futóverseny
                             bool exit = false;
                             while (!exit)
                             {
-                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások","Statisztikák","Adatok kezelése","Adatok törlése", "Módosíás","Megtett össztáv","Átlag sebseeég változása","Futási cél számláló","Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások","Statisztikák","Futások kezelése","Átlag sebseeég változása","Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
                                 switch (edzesMenu)
                                 {
                                     case 0:
@@ -50,25 +50,22 @@ namespace DIN_Futóverseny
                                         EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser);
                                         break;
                                     case 3:
-                                        
+                                        int kezelomenu= Text.ArrowMenu(new string[] { "Futás törlése","Futás módosítása", "Vissza" }, "Futás szerkesztés");
+                                        switch (kezelomenu)
+                                        {
+                                            case 0:
+                                                EdzesekAdatfeldolgozas.Torol(loggeduser.Nev, adatok);
+                                                break;
+                                            case 1:
+                                                EdzesekAdatfeldolgozas.Modosit(loggeduser.Nev);
+                                                break;
+                                            case 2:
+                                                break;
+                                        }
                                         break;
                                     case 4:
-                                        EdzesekAdatfeldolgozas.Torol(loggeduser.Nev, adatok);
                                         break;
                                     case 5:
-                                        EdzesekAdatfeldolgozas.Modosit(loggeduser.Nev);
-                                        break;
-
-                                    case 6:
-                                        EdzesekAdatfeldolgozas.Ossz(loggeduser.Nev);
-                                        break;
-                                    case 7:
-                                        EdzesekAdatfeldolgozas.Atlagsebessegvaltozasa(loggeduser.Nev);
-                                        break;
-                                    case 8:
-                                        EdzesekAdatfeldolgozas.Szamlalo(loggeduser);
-                                        break;
-                                    case 9:
                                         exit = true;
                                         break;
                                 }

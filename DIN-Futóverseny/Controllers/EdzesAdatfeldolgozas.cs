@@ -182,6 +182,8 @@ namespace DIN_Futóverseny.Controllers
         {
             double atlagSebesseg = AtlagSebesseg(edzesek, user);
             Text.WriteLine($"Az átlagos futási sebességed: {atlagSebesseg:F2} km/h");
+            Text.WriteLine($"A célodnak({user.Altcel} km/futás) ennyiszer feleltél meg: {Szamlalo(user)}");
+            Text.WriteLine($"Összesen ennyit futottál: {Ossz(user.Nev)} km");
             Console.ReadLine();
         }
 
@@ -237,6 +239,11 @@ namespace DIN_Futóverseny.Controllers
 
         }
 
+        /// <summary>
+        /// Adott felhasználó edzésének törlése
+        /// </summary>
+        /// <param name="username">A törölni kívánt edzés felhasználóneve</param>
+        /// <param name="useredzesek">A felhasználó edzései</param>
         public static void Torol(string username, List<Edzes_adatok> useredzesek)
         {
             try
@@ -279,6 +286,10 @@ namespace DIN_Futóverseny.Controllers
             }
         }
 
+        /// <summary>
+        /// Adott felhasználó edzésének módosítása
+        /// </summary>
+        /// <param name="username">A módosítani kívánt edzés felhasználóneve</param>
         public static void Modosit(string username)
         {
             try
@@ -418,7 +429,12 @@ namespace DIN_Futóverseny.Controllers
             }
         }
 
-        public static void Ossz(string username)
+        /// <summary>
+        /// Adott felhasználó összes futott távjának kiszámolása
+        /// </summary>
+        /// <param name="username">A felhasználó neve</param>
+        /// <returns>A felhasználó összes futott távja</returns>
+        public static decimal Ossz(string username)
         {
             decimal osszeg = 0;
             List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
@@ -429,13 +445,14 @@ namespace DIN_Futóverseny.Controllers
                     osszeg += edzes.Tavolsag;
                 }
             }
-
-
-            Console.WriteLine(osszeg);
-            Console.ReadLine();
+            return osszeg;
 
         }
 
+        /// <summary>
+        /// Adott felhasználó edzéseinek átlagsebesség változásának kiíratása
+        /// </summary>
+        /// <param name="username">A felhasználó neve</param>
         public static void Atlagsebessegvaltozasa(string username)
         {
             List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
@@ -473,8 +490,13 @@ namespace DIN_Futóverseny.Controllers
             }
             Console.ReadLine() ;    
         }
-       
-        public static void Szamlalo(Users user)
+
+        /// <summary>
+        /// Adott felhasználó hány alkalommal érte el az adott céltávot
+        /// </summary>
+        /// <param name="user">A felhasználó</param>
+        /// <returns>A felhasználó által elért céltávok száma</returns>
+        public static int Szamlalo(Users user)
         {
             List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
 
@@ -491,8 +513,7 @@ namespace DIN_Futóverseny.Controllers
                 }
                 
             }
-            Console.WriteLine($"{hanyszor} alkalommal érted el a célod!");
-            Console.ReadLine();
+            return hanyszor;
         }
     }
 }
