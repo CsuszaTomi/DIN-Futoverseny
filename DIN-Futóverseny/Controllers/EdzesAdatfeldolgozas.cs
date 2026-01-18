@@ -134,6 +134,12 @@ namespace DIN_Futóverseny.Controllers
             }
         }
 
+        /// <summary>
+        /// Atlagsebesség kiszámolása egy felhasználó edzései alapján
+        /// </summary>
+        /// <param name="edzesek">A felhasználó edzései</param>
+        /// <param name="user">A bejelentkezett felhasználó</param>
+        /// <returns>A felhasználó átlagsebessége</returns>
         public static double AtlagSebesseg(List<Edzes_adatok> edzesek, Users user)
         {
             List<Edzes_adatok> useredzesek = new List<Edzes_adatok>();
@@ -153,6 +159,11 @@ namespace DIN_Futóverseny.Controllers
             return osszSebesseg / useredzesek.Count;
         }
 
+        /// <summary>
+        /// Kiszámolja egy edzés átlagsebességét
+        /// </summary>
+        /// <param name="edzes">A futás adatai</param>
+        /// <returns>A futás átlagsebessége</returns>
         public static double EdzesAtlagSebesseg(Edzes_adatok edzes)
         {
             double tavolsag = (double)edzes.Tavolsag;
@@ -161,6 +172,11 @@ namespace DIN_Futóverseny.Controllers
             return sebesseg;
         }
 
+        /// <summary>
+        /// Kiírja a felhasználó statisztikáit
+        /// </summary>
+        /// <param name="edzesek">A felhasználó edzései</param>
+        /// <param name="user">A bejelentkezett felhasználó</param>
         public static void Statisztikak(List<Edzes_adatok> edzesek, Users user)
         {
             double atlagSebesseg = AtlagSebesseg(edzesek, user);
