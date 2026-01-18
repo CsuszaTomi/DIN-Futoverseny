@@ -416,5 +416,19 @@ namespace DIN_Futóverseny.Controllers
                 Console.WriteLine("Hiba történt: " + e.Message);
             }
         }
+
+        public static void Ossz(string username)
+        {
+            decimal osszeg = 0;
+            List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
+            foreach (var edzes in osszesEdzes)
+            {
+                osszeg+=edzes.Tavolsag;
+            }
+
+            Console.WriteLine(osszeg);
+            Console.ReadLine();
+
+        }
     }
 }
