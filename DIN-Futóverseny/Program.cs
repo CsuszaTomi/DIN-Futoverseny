@@ -50,6 +50,7 @@ namespace DIN_Futóverseny
                                         EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser);
                                         break;
                                     case 3:
+
                                         break;
                                     case 4:
                                         EdzesekAdatfeldolgozas.Torol(loggeduser.Nev, adatok);
