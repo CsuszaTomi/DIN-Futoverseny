@@ -35,7 +35,7 @@ namespace DIN_Futóverseny
                             bool exit = false;
                             while (!exit)
                             {
-                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futás statisztikák","Futás műveletek", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások","Statisztikák","Adatok kezelése", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
                                 switch (edzesMenu)
                                 {
                                     case 0:
@@ -44,11 +44,14 @@ namespace DIN_Futóverseny
                                         break;
                                     case 1:
                                         //Statisztika megjelenítése 
-                                        EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev);
+                                        EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev, adatok);
                                         break;
                                     case 2:
+                                        EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser);
                                         break;
                                     case 3:
+                                        break;
+                                    case 4:
                                         exit = true;
                                         break;
                                 }
