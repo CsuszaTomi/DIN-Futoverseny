@@ -426,6 +426,7 @@ namespace DIN_Futóverseny.Controllers
                 osszeg+=edzes.Tavolsag;
             }
 
+
             Console.WriteLine(osszeg);
             Console.ReadLine();
 
