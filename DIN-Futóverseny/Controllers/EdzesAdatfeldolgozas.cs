@@ -431,5 +431,10 @@ namespace DIN_Futóverseny.Controllers
             Console.ReadLine();
 
         }
+
+        public static void Atlagsebessegvaltozasa(string username)
+        {
+
+        }
     }
 }
