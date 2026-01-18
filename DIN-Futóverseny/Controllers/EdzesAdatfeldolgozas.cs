@@ -278,9 +278,143 @@ namespace DIN_Futóverseny.Controllers
             }
         }
 
-        public static void Modosit()
+        public static void Modosit(string username)
         {
+            try
+            {
+             
+                Megjelenites(username, null);
 
+                Console.Write("\nAdd meg a módosítani kívánt edzés sorszámát: ");
+                if (!int.TryParse(Console.ReadLine(), out int index))
+                {
+                    Console.WriteLine("Hibás adat! Számot adj meg.");
+                    return;
+                }
+                index = index - 1;
+
+            
+                List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
+
+               
+                List<Edzes_adatok> sajatEdzesek = new List<Edzes_adatok>();
+                foreach (var edzes in osszesEdzes)
+                {
+                    if (edzes.Nev == username) sajatEdzesek.Add(edzes);
+                }
+
+              
+           
+                    Edzes_adatok szerkesztendo = sajatEdzesek[index];
+                   
+                    bool kilepes = false;
+
+                    while (!kilepes)
+                    {
+                        Console.Clear();
+                        Text.WriteLine($"Kiválasztott edzés dátuma: {szerkesztendo.Datum.ToShortDateString()}", "green");
+                        Console.WriteLine("Mit szeretnél módosítani?");
+                        Console.WriteLine("1. Dátum");
+                        Console.WriteLine("2. Távolság");
+                        Console.WriteLine("3. Időtartam");
+                        Console.WriteLine("4. Max pulzus");
+                        Console.WriteLine("5. Nyugalmi pulzus");
+                        Console.WriteLine("6. Testsúly");
+                        Console.WriteLine("7. MENTÉS és Kilépés");
+                        Console.Write("\nVálassz menüpontot: ");
+
+                        string menu = Console.ReadLine();
+
+                        switch (menu)
+                        {
+                            case "1":
+                                Console.Write($"Jelenlegi: {szerkesztendo.Datum.ToShortDateString()}. \nAdd meg az újat (yyyy-mm-dd): ");
+                                string ujDatum = Console.ReadLine();
+                                while (!Ellenorzo.DateTimeEllenorzo(ujDatum))
+                                {
+                                    Text.Write("Hibás formátum! Add meg újra: ", "red");
+                                    ujDatum = Console.ReadLine();
+                                }
+                                szerkesztendo.Datum = DateTime.Parse(ujDatum);
+                             
+                                break;
+
+                            case "2": 
+                                Console.Write($"Jelenlegi: {szerkesztendo.Tavolsag} km. \nAdd meg az újat: ");
+                                string ujTav = Console.ReadLine();
+                                while (!Ellenorzo.DecimalSzamEllenorzo(ujTav))
+                                {
+                                    Text.Write("Hibás formátum! Add meg újra: ", "red");
+                                    ujTav = Console.ReadLine();
+                                }
+                                szerkesztendo.Tavolsag = decimal.Parse(ujTav);
+                           
+                                break;
+
+                            case "3": 
+                                Console.Write($"Jelenlegi: {szerkesztendo.Idotartam}. \nAdd meg az újat (óó:pp:mm): ");
+                                string ujIdo = Console.ReadLine();
+                                while (!Ellenorzo.TimeSpanEllenorzo(ujIdo))
+                                {
+                                    Text.Write("Hibás formátum! Add meg újra: ", "red");
+                                    ujIdo = Console.ReadLine();
+                                }
+                                szerkesztendo.Idotartam = TimeSpan.Parse(ujIdo);
+                            
+                                break;
+
+                            case "4": 
+                                Console.Write($"Jelenlegi: {szerkesztendo.Max_pulzus}. \nAdd meg az újat: ");
+                                string ujMaxP = Console.ReadLine();
+                                while (!Ellenorzo.IntSzamEllenorzo(ujMaxP))
+                                {
+                                    Text.Write("Hibás formátum! Add meg újra: ", "red");
+                                    ujMaxP = Console.ReadLine();
+                                }
+                                szerkesztendo.Max_pulzus = int.Parse(ujMaxP);
+                             
+                                break;
+
+                            case "5": 
+                                Console.Write($"Jelenlegi: {szerkesztendo.Nyug_pulzus}. \nAdd meg az újat: ");
+                                string ujNyugP = Console.ReadLine();
+                                while (!Ellenorzo.IntSzamEllenorzo(ujNyugP))
+                                {
+                                    Text.Write("Hibás formátum! Add meg újra: ", "red");
+                                    ujNyugP = Console.ReadLine();
+                                }
+                                szerkesztendo.Nyug_pulzus = int.Parse(ujNyugP);
+                               
+                                break;
+
+                            case "6": 
+                                Console.Write($"Jelenlegi: {szerkesztendo.Testsuly} kg. \nAdd meg az újat: ");
+                                string ujSuly = Console.ReadLine();
+                                while (!Ellenorzo.DoubleEllenorzo(ujSuly))
+                                {
+                                    Text.Write("Hibás formátum! Add meg újra: ", "red");
+                                    ujSuly = Console.ReadLine();
+                                }
+                                szerkesztendo.Testsuly = double.Parse(ujSuly);
+                           
+                                break;
+
+                            case "7": 
+                                kilepes = true;
+                                break;
+
+                            default:
+                                Console.WriteLine("Nincs ilyen opció.");
+                                break;
+                        }
+                    }
+                EdzesSave(sajatEdzesek, null);
+              
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Hiba történt: " + e.Message);
+            }
         }
     }
 }

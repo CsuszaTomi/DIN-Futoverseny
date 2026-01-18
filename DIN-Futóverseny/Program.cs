@@ -35,7 +35,7 @@ namespace DIN_Futóverseny
                             bool exit = false;
                             while (!exit)
                             {
-                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások","Statisztikák","Adatok kezelése","Adatok törlése", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások","Statisztikák","Adatok kezelése","Adatok törlése", "Módosíás","Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
                                 switch (edzesMenu)
                                 {
                                     case 0:
@@ -55,6 +55,9 @@ namespace DIN_Futóverseny
                                         EdzesekAdatfeldolgozas.Torol(loggeduser.Nev, adatok);
                                         break;
                                     case 5:
+                                        EdzesekAdatfeldolgozas.Modosit(loggeduser.Nev);
+                                        break;
+                                    case 6:
                                         exit = true;
                                         break;
                                 }
