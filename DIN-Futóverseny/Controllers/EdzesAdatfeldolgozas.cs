@@ -235,5 +235,47 @@ namespace DIN_Futóverseny.Controllers
             }
 
         }
+
+        public static void Torol(string username, List<Edzes_adatok> useredzesek)
+        {
+            try
+            {
+          
+                Megjelenites(username, null);
+
+                Console.Write("\nAdd meg a törölni kívánt sorszámot: ");
+               
+                int index=int.Parse(Console.ReadLine());
+                index = index - 1;
+
+            
+                List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
+
+          
+                List<Edzes_adatok> sajatEdzesek = new List<Edzes_adatok>();
+                foreach (var edzes in osszesEdzes)
+                {
+                    if (edzes.Nev == username)
+                    {
+                        sajatEdzesek.Add(edzes);
+                    }
+                }
+
+               
+                    Edzes_adatok torlendoElem = sajatEdzesek[index];
+
+                    osszesEdzes.Remove(torlendoElem);
+
+                
+                    EdzesSave(osszesEdzes, null);
+
+                    Console.WriteLine("Sikeres törlés!");
+              
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Hiba történt: " + e.Message);
+            }
+        }
     }
 }
