@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\AdminActions.cs" />
     <Compile Include="Controllers\EdzesAdatfeldolgozas.cs" />
     <Compile Include="Controllers\Ellenorzo.cs" />
     <Compile Include="Controllers\Settings.cs" />

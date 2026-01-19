@@ -46,21 +46,19 @@ namespace DIN_Futóverseny
                                 while (!exitAdmin)
                                 {
                                     int adminMenu = Text.ArrowMenu(
-                                        new string[] { "Felhasználók listázása", "Kilépés" },
+                                        new string[] { "Felhasználók listázása","Felhasználó törlése", "Kilépés" },
                                         "Admin felület"
                                     );
 
                                     switch (adminMenu)
                                     {
                                         case 0:
-                                            foreach (var u in Users)
-                                            {
-                                                Console.WriteLine(u.Nev);
-                                            }
-                                            Console.ReadLine();
+                                            AdminActions.ListUsers(Users);
                                             break;
-
                                         case 1:
+                                            AdminActions.DeleteUser(Users);
+                                            break;
+                                        case 2:
                                             exitAdmin = true;
                                             break;
                                     }
@@ -68,8 +66,6 @@ namespace DIN_Futóverseny
                             }
                             else
                             {
-
-                            
                             bool exit = false;
                             while (!exit)
                             {
