@@ -15,13 +15,7 @@ namespace DIN_Futóverseny
         static List<Edzes_adatok> adatok = EdzesekAdatfeldolgozas.EdzesFeldolgozo();
         static Users loggeduser = null;
         static List<Users> Users = UserActions.GetUsers();
-        static Program()
-        {
-            if (!Users.Any(u => u.IsAdmin))
-            {
-                Users.Add(new Users("admin", "admin123", DateTime.Now, 0, 0, 0, 0) { IsAdmin = true });
-            }
-        }
+        public static bool AdminLogin = false;
         static void Main(string[] args)
         {
             while (true)
@@ -34,42 +28,14 @@ namespace DIN_Futóverseny
                         break;
                     case 1:
                         loggeduser = UserActions.Login(Users);
-                        if (loggeduser != null)
+                        if (loggeduser != null && AdminLogin == false)
                         {
                             Text.WriteLine("Sikeres belépés!", "green");
-
                             Settings.Delay();
-
-                            if (loggeduser.IsAdmin)
-                            {
-                                bool exitAdmin = false;
-                                while (!exitAdmin)
-                                {
-                                    int adminMenu = Text.ArrowMenu(
-                                        new string[] { "Felhasználók listázása","Felhasználó törlése", "Kilépés" },
-                                        "Admin felület"
-                                    );
-
-                                    switch (adminMenu)
-                                    {
-                                        case 0:
-                                            AdminActions.ListUsers(Users);
-                                            break;
-                                        case 1:
-                                            AdminActions.DeleteUser(Users);
-                                            break;
-                                        case 2:
-                                            exitAdmin = true;
-                                            break;
-                                    }
-                                }
-                            }
-                            else
-                            {
                             bool exit = false;
                             while (!exit)
                             {
-                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások", "Statisztikák", "Futások kezelése", "Átlag sebseeég változása", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások", "Statisztikák", "Futások kezelése", "Átlag sebesség változása", "Fiók kezelés", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
                                 switch (edzesMenu)
                                 {
                                     case 0:
@@ -79,6 +45,7 @@ namespace DIN_Futóverseny
                                     case 1:
                                         //Statisztika megjelenítése 
                                         EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev, adatok);
+                                        Console.ReadLine();
                                         break;
                                     case 2:
                                         EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser);
@@ -98,13 +65,37 @@ namespace DIN_Futóverseny
                                         }
                                         break;
                                     case 4:
+                                        EdzesekAdatfeldolgozas.Atlagsebessegvaltozasa(loggeduser.Nev);
                                         break;
                                     case 5:
+                                        Users = UserActions.FiokAdatModositas(Users, loggeduser);
+                                        break;
+                                    case 6:
                                         exit = true;
                                         break;
                                 }
                             }
                         }
+                        else if(AdminLogin == true)
+                        {
+                            bool exitAdmin = false;
+                            while (!exitAdmin)
+                            {
+                                int adminMenu = Text.ArrowMenu(new string[] { "Felhasználók listázása", "Felhasználó törlése", "Kilépés" }, "Admin felület");
+                                switch (adminMenu)
+                                {
+                                    case 0:
+                                        AdminActions.ListUsers(Users);
+                                        break;
+                                    case 1:
+                                        Users = AdminActions.DeleteUser(Users);
+                                        UserActions.UserSave(Users);
+                                        break;
+                                    case 2:
+                                        exitAdmin = true;
+                                        break;
+                                }
+                            }
                         }
                         else
                         {

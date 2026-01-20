@@ -29,6 +29,8 @@ namespace DIN_Futóverseny.Models
                     Console.ForegroundColor = ConsoleColor.Red;
                 else if (szin == "yellow")
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                else if (szin == "blue")
+                    Console.ForegroundColor = ConsoleColor.Blue;
             }
             else
                 Console.ForegroundColor = ConsoleColor.White;
@@ -54,6 +56,8 @@ namespace DIN_Futóverseny.Models
                     Console.ForegroundColor = ConsoleColor.Red;
                 else if (szin == "yellow")
                     Console.ForegroundColor = ConsoleColor.Yellow;
+                else if (szin == "blue")
+                    Console.ForegroundColor = ConsoleColor.Blue;
             }
             else
                 Console.ForegroundColor = ConsoleColor.White;

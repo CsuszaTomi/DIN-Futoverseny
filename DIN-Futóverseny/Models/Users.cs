@@ -50,6 +50,5 @@ namespace DIN_Futóverseny.Models
         public double Magassag { get => magassag; set => magassag = value; }
         public double Nyugpul { get => nyugpul; set => nyugpul = value; }
         public double Altcel { get => altcel; set => altcel = value; }
-        public bool IsAdmin { get; set; } = false;
     }
 }

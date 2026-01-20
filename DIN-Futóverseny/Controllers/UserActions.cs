@@ -49,6 +49,15 @@ namespace DIN_Futóverseny.Controllers
                 Text.Write("Név: ");
                 nev = Console.ReadLine();
             }
+            foreach (Users user in users)
+            {
+                while (user.Nev == nev)
+                {
+                    Text.WriteLine("Ez a név már foglalt!", "red");
+                    Text.Write("Név: ");
+                    nev = Console.ReadLine();
+                }
+            }
             Text.Write("Jelszó: ");
             string jelszo = Console.ReadLine();
             while (!Ellenorzo.UressegEllenorzo(jelszo))
@@ -115,12 +124,23 @@ namespace DIN_Futóverseny.Controllers
             string bjelszo = Console.ReadLine();
             foreach (Users user in users)
             {
+                if (bnev == "admin" && bjelszo == "123")
+                {
+                    LoginAdmin(new string[2] { bnev, bjelszo });
+                    return null;
+                }
                 if (user.Jelszo == bjelszo && user.Nev == bnev)
                 {
                     return user;
                 }
             }
             return null;
+        }
+
+        public static void LoginAdmin(string[] stringek)
+        {
+            if (stringek[0] == "admin" && stringek[1] == "123")
+                Program.AdminLogin = true;
         }
 
         public static void UserSave(List<Users> users)
@@ -134,6 +154,84 @@ namespace DIN_Futóverseny.Controllers
             string projectPath = Path.GetFullPath(Path.Combine(basePath, @"..\.."));
             string filePath = Path.Combine(projectPath, "users.txt");
             File.WriteAllLines(filePath, sorok, System.Text.Encoding.UTF8);
+        }
+
+        public static List<Users> FiokAdatModositas(List<Users> users, Users loggeduser)
+        {
+            Console.Clear();
+            Text.WriteLine("Fiók adatok módosítása", "red");
+            Text.WriteLine("====================");
+            Text.WriteLine("Ha valami adatot nem szeretnél módosítani, hagyd üresen és nyomj entert!", "yellow");
+            Text.Write("Új jelszó: ");
+            string ujJelszo = Console.ReadLine();
+            if (ujJelszo != "")
+            {
+                loggeduser.Jelszo = ujJelszo;
+            }
+            Text.Write("Új születési dátum: ");
+            string ujszuldat = Console.ReadLine();
+            if(ujszuldat != "")
+            {
+                while(!Ellenorzo.DateTimeEllenorzo(ujszuldat))
+                { 
+                    Text.WriteLine("Érvénytelen születési dátum!", "red");
+                    Text.Write("Új születési dátum: ");
+                    ujszuldat = Console.ReadLine();
+                }
+                loggeduser.Szuldatum = DateTime.Parse(ujszuldat);
+            }
+            Text.Write("Új testsúly (kg): ");
+            string ujtestsuly = Console.ReadLine();
+            if(ujtestsuly != "")
+            {
+                while(!Ellenorzo.DoubleEllenorzo(ujtestsuly))
+                {
+                    Text.WriteLine("Érvénytelen testsúly!", "red");
+                    Text.Write("Új testsúly (kg): ");
+                    ujtestsuly = Console.ReadLine();
+                }
+                loggeduser.Testsuly = double.Parse(ujtestsuly);
+            }
+            Text.Write("Új magasság (cm): ");
+            string ujmagassag = Console.ReadLine();
+            if(ujmagassag != "")
+            {
+                while(!Ellenorzo.DoubleEllenorzo(ujmagassag))
+                {
+                    Text.WriteLine("Érvénytelen magasság!", "red");
+                    Text.Write("Új magasság (cm): ");
+                    ujmagassag = Console.ReadLine();
+                }
+                loggeduser.Magassag = double.Parse(ujmagassag);
+            }
+            Text.Write("Új nyugalmi pulzus (bpm): ");
+            string ujnyugpul = Console.ReadLine();
+            if(ujnyugpul != "")
+            {
+                while(!Ellenorzo.DoubleEllenorzo(ujnyugpul))
+                {
+                    Text.WriteLine("Érvénytelen nyugalmi pulzus!", "red");
+                    Text.Write("Új nyugalmi pulzus (bpm): ");
+                    ujnyugpul = Console.ReadLine();
+                }
+                loggeduser.Nyugpul = double.Parse(ujnyugpul);
+            }
+            Text.Write("Új általános futás cél km-ben: ");
+            string ujaltcel = Console.ReadLine();
+            if(ujaltcel != "")
+            {
+                while(!Ellenorzo.DoubleEllenorzo(ujaltcel))
+                {
+                    Text.WriteLine("Érvénytelen általános futás cél!", "red");
+                    Text.Write("Új általános futás cél km-ben: ");
+                    ujaltcel = Console.ReadLine();
+                }
+                loggeduser.Altcel = double.Parse(ujaltcel);
+            }
+            UserSave(users);
+            Text.WriteLine("Sikeres módosítás!", "green");
+            Settings.Delay();
+            return users;
         }
     }
 }

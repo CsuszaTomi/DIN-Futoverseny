@@ -12,32 +12,43 @@ namespace DIN_Futóverseny.Controllers
         public static void ListUsers(List<Users> users)
         {
             Console.Clear();
-            Console.WriteLine("Felhasználók listája:");
+            Text.WriteLine("Felhasználók listája");
+            Text.WriteLine("====================");
             foreach (var u in users)
             {
-                Console.WriteLine($"{u.Nev} {(u.IsAdmin ? "(Admin)" : "")}");
+                Text.WriteLine($"{u.Nev}");
             }
             Console.ReadLine();
         }
-        public static void DeleteUser(List<Users> users)
+        public static List<Users> DeleteUser(List<Users> users)
         {
             Console.Clear();
             ListUsers(users);
-            Console.Write("\nAdd meg a törölni kívánt felhasználó nevét: ");
+            Text.Write("Add meg a törölni kívánt felhasználó nevét: ");
             string nev = Console.ReadLine();
-
-            var user = users.FirstOrDefault(u => u.Nev == nev && !u.IsAdmin);
-            if (user != null)
+            int szamlalo = 0;
+            foreach (Users user in users)
             {
-                users.Remove(user);
-                UserActions.UserSave(users);
-                Console.WriteLine("Felhasználó törölve!");
+                if (user.Nev == nev)
+                {
+                    users.Remove(user);
+                    UserActions.UserSave(users);
+                    Text.WriteLine("Felhasználó törölve!");
+                    Settings.Delay();
+                    return users;
+                }
+                else
+                {
+                    szamlalo++;
+                    if (szamlalo == users.Count)
+                    {
+                        Text.WriteLine("Nincs ilyen nevű felhasználó!");
+                        Settings.Delay();
+                        return users;
+                    }
+                }
             }
-            else
-            {
-                Console.WriteLine("Nem található vagy admin felhasználó nem törölhető.");
-            }
-            Console.ReadLine();
+            return users;
         }
     }
 }

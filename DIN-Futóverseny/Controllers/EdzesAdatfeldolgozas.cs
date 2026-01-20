@@ -44,6 +44,10 @@ namespace DIN_Futóverseny.Controllers
             return sorok;
         }
 
+        /// <summary>
+        /// Létrehozza a futás objekutumokat a beolvasott adatok alapján
+        /// </summary>
+        /// <returns>A beolvasott edzési adatokat tartalmazó listát</returns>
         public static List<Edzes_adatok> EdzesFeldolgozo()
         {
             string[] sorok = EdzesBeolvasó();
@@ -180,10 +184,14 @@ namespace DIN_Futóverseny.Controllers
         /// <param name="user">A bejelentkezett felhasználó</param>
         public static void Statisztikak(List<Edzes_adatok> edzesek, Users user)
         {
+            Console.Clear();
+            Text.WriteLine("Statisztikák", "red");
+            Text.WriteLine("====================");
             double atlagSebesseg = AtlagSebesseg(edzesek, user);
             Text.WriteLine($"Az átlagos futási sebességed: {atlagSebesseg:F2} km/h");
             Text.WriteLine($"A célodnak({user.Altcel} km/futás) ennyiszer feleltél meg: {Szamlalo(user)}");
             Text.WriteLine($"Összesen ennyit futottál: {Ossz(user.Nev)} km");
+            Text.WriteLine("Enterrel vissza.....", "yellow");
             Console.ReadLine();
         }
 
@@ -228,7 +236,6 @@ namespace DIN_Futóverseny.Controllers
                 Text.WriteLine("====================");
                 Tables.Table(new string[] {"Dátum","Távolság(km)", "Idő tartam(ó:p:m)","Max pulzus", "Nyugalmi pulzus", "Testsúly(kg)", "Átlag sebesség(km/h)"}, adatok.ToArray());
                 Text.WriteLine("");
-                Console.ReadLine();
             }
             catch (Exception e)
             {
@@ -457,6 +464,9 @@ namespace DIN_Futóverseny.Controllers
         {
             List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
 
+            Console.Clear();
+            Text.WriteLine("Átlagos sebesség változás", "red");
+            Text.WriteLine("========================");
 
             List<Edzes_adatok> sajatEdzesek = new List<Edzes_adatok>();
             foreach (var edzes in osszesEdzes)
@@ -467,27 +477,28 @@ namespace DIN_Futóverseny.Controllers
             for (int i = 0; i < sajatEdzesek.Count; i++) 
             {
                 double mostani = EdzesAtlagSebesseg(sajatEdzesek[i]);
-                Console.WriteLine($"{i+1}. futás átlagsebessége: {mostani:F2} km/h");
+                Text.WriteLine($"{i+1}. futás átlagsebessége: {mostani:F2} km/h");
                 if (i > 0)
                 {
                     double elozo = EdzesAtlagSebesseg(sajatEdzesek[i - 1]);
                     if (mostani > elozo)
                     {
-                        Console.WriteLine($"Ez az előzőhöz képest: {mostani-elozo:F2}-vel jobb");
+                        Text.WriteLine($"Ez az előzőhöz képest: {mostani-elozo:F2} km-el jobb","green");
                     }
                     else if (mostani < elozo)
                     {
-                        Console.WriteLine($"Ez az előzőhöz képest: {(mostani - elozo) * -1:F2}-vel rosszabb");
+                        Text.WriteLine($"Ez az előzőhöz képest: {(mostani - elozo) * -1:F2} km-el rosszabb","red");
                     }
                     else
                     {
 
-                        Console.WriteLine("megegyezik az előzővel" +
-                            "");
+                        Text.WriteLine("megegyezik az előzővel" +
+                            "", "blue");
                     }
 
                 }
             }
+            Text.WriteLine("Enterrel vissza...","yellow");
             Console.ReadLine() ;    
         }
 
