@@ -11,7 +11,10 @@ namespace DIN_Futóverseny.Controllers
 {
     internal class UserActions
     {
-
+        /// <summary>
+        /// Felhasználók beolvasása a fájlból
+        /// </summary>
+        /// <returns>A felhasználók listája</returns>
         public static List<Users> GetUsers()
         {
             string basePath = AppDomain.CurrentDomain.BaseDirectory;
@@ -36,6 +39,11 @@ namespace DIN_Futóverseny.Controllers
             return users;
         }
 
+        /// <summary>
+        /// Új felhasználó regisztrációja
+        /// </summary>
+        /// <param name="users">A felhasználók listája</param>
+        /// <returns>A regisztrált felhasználók listája</returns>
         public static List<Users> Register(List<Users> users)
         {
             Console.Clear();
@@ -113,6 +121,11 @@ namespace DIN_Futóverseny.Controllers
             return users;
         }
 
+        /// <summary>
+        /// Bejelentkezés a rendszerbe
+        /// </summary>
+        /// <param name="users">A felhasználók listája</param>
+        /// <returns>A bejelentkezett felhasználó</returns>
         public static Users Login(List<Users> users)
         {
             Console.Clear();
@@ -137,12 +150,23 @@ namespace DIN_Futóverseny.Controllers
             return null;
         }
 
+        /// <summary>
+        /// Admin bejelentkezés ellenőrzése
+        /// </summary>
+        /// <param name="stringek"></param>
         public static void LoginAdmin(string[] stringek)
         {
             if (stringek[0] == "admin" && stringek[1] == "123")
                 Program.AdminLogin = true;
         }
 
+        /// <summary>
+        /// Elmenti a felhasználók adatait a fájlba
+        /// </summary>
+        /// <remarks>
+        /// A felhasználók adatait elmenti a "users.txt" fájlba, UTF-8 kódolással.
+        /// </remarks>
+        /// <param name="users">A felhasználók listája</param>
         public static void UserSave(List<Users> users)
         {
             List<string> sorok = new List<string>();
@@ -156,6 +180,12 @@ namespace DIN_Futóverseny.Controllers
             File.WriteAllLines(filePath, sorok, System.Text.Encoding.UTF8);
         }
 
+        /// <summary>
+        /// A felhasználó fiók adatainak módosítása
+        /// </summary>
+        /// <param name="users">A felhasználók listája</param>
+        /// <param name="loggeduser">A bejelentkezett felhasználó</param>
+        /// <returns>A módosított felhasználók listája</returns>
         public static List<Users> FiokAdatModositas(List<Users> users, Users loggeduser)
         {
             Console.Clear();

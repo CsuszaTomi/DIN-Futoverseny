@@ -10,85 +10,26 @@ namespace DIN_Futóverseny.View
     internal class Tables
     {
         /// <summary>
-        /// Egy formázott táblázatot rajzol ki a konzolra a megadott címsorok és értékek alapján.
-        /// A metódus automatikusan kiszámolja az oszlopok szükséges szélességét a tartalom alapján.
+        /// Adott edzésadatokat táblázatos formában jeleníti meg a konzolon.
         /// </summary>
-        /// <param name="cimsorok">A táblázat oszlopainak fejléceit tartalmazó tömb. Ennek hossza határozza meg az oszlopok számát.</param>
-        /// <param name="ertekek">A táblázat adatait tartalmazó egydimenziós tömb. Az értékek sorfolytonosan kerülnek a táblázatba. A tömb elemszámának oszthatónak kell lennie a címsorok számával.</param>
-        public static void Table(string[] cimsorok, string[] ertekek)
+        /// <param name="adatok">A megjelenítendő edzésadatok listája.</param>
+        public static void EdzesTablazatMegjelenites(List<string> adatok)
         {
-            int oszlopokSzama = cimsorok.Length;
-            if (ertekek.Length % oszlopokSzama != 0)
+            Text.WriteLine("╔═══════════════╦══════════╦════════════╦══════════════╦════════════════╦══════════╦═══════════════════════╗");
+            Text.WriteLine("║     Dátum     ║ Táv (km) ║    Idő     ║  MaxPulzus   ║ NyugalmiPulzus ║  Súly    ║ Átlag sebesség (km/h) ║");
+            Text.WriteLine("╠═══════════════╬══════════╬════════════╬══════════════╬════════════════╬══════════╬═══════════════════════╣");
+            for (int i = 0; i < adatok.Count; i += 7)
             {
-                Text.WriteLine("Az értékek száma nem jön ki a címsorok számával!", "red");
-                return;
+                string datum = adatok[i].PadRight(12);
+                string tav = adatok[i + 1].PadLeft(8); 
+                string ido = adatok[i + 2].PadLeft(10); 
+                string maxP = adatok[i + 3].PadLeft(12);
+                string nyugP = adatok[i + 4].PadLeft(14);
+                string suly = adatok[i + 5].PadLeft(8);
+                string seb = adatok[i + 6].PadLeft(21);
+                Text.WriteLine($"║ {datum} ║ {tav} ║ {ido} ║ {maxP} ║ {nyugP} ║ {suly} ║ {seb} ║");
             }
-            int sorokSzama = ertekek.Length / oszlopokSzama;
-            int[] szelessegek = new int[oszlopokSzama];
-            //szélességek kiszámolása
-            for (int i = 0; i < oszlopokSzama; i++)
-            {
-                szelessegek[i] = cimsorok[i].Length; 
-                for (int j = 0; j < sorokSzama; j++)
-                {
-                    string adat = ertekek[j * oszlopokSzama + i];
-                    if (adat.Length > szelessegek[i])
-                    {
-                        szelessegek[i] = adat.Length;
-                    }
-                }
-            }
-            //vonal rajzoló függvény
-            string VonalRajzolas(string bal, string kozep, string jobb, string kitolto)
-            {
-                string vonal = bal;
-                for (int i = 0; i < oszlopokSzama; i++)
-                {
-                    vonal += new string(kitolto[0], szelessegek[i] + 2);
-                    if (i < oszlopokSzama - 1) vonal += kozep;
-                    else vonal += jobb;
-                }
-                return vonal;
-            }
-
-            //felso szegely
-            Text.WriteLine(VonalRajzolas("╔", "╦", "╗", "═"));
-
-            //fejlec tartalom
-            string fejlecSor = "║";
-            for (int i = 0; i < oszlopokSzama; i++)
-            {
-                
-                fejlecSor += " " + cimsorok[i].PadRight(szelessegek[i]) + " ║";
-            }
-            Text.WriteLine(fejlecSor);
-
-            //kozepso resz
-            if (sorokSzama > 0)
-            {
-                Text.WriteLine(VonalRajzolas("╠", "╬", "╣", "═"));
-            }
-            else
-            {
-                //adatzaro
-                Text.WriteLine(VonalRajzolas("╚", "╩", "╝", "═"));
-                return;
-            }
-
-            //adat beiro
-            for (int i = 0; i < sorokSzama; i++)
-            {
-                string sor = "║";
-                for (int j = 0; j < oszlopokSzama; j++)
-                {
-                    string adat = ertekek[i * oszlopokSzama + j];
-                    sor += " " + adat.PadRight(szelessegek[j]) + " ║";
-                }
-                Text.WriteLine(sor);
-            }
-
-            //also szegely
-            Text.WriteLine(VonalRajzolas("╚", "╩", "╝", "═"));
-        }   
+            Text.WriteLine("╚═══════════════╩══════════╩════════════╩══════════════╩════════════════╩══════════╩═══════════════════════╝");
+        }
     }
 }

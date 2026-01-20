@@ -9,6 +9,10 @@ namespace DIN_Futóverseny.Controllers
 {
     internal class AdminActions
     {
+        /// <summary>
+        /// Kiírja a felhasználók listáját
+        /// </summary>
+        /// <param name="users">A felhasználók listája</param>
         public static void ListUsers(List<Users> users)
         {
             Console.Clear();
@@ -20,6 +24,12 @@ namespace DIN_Futóverseny.Controllers
             }
             Console.ReadLine();
         }
+
+        /// <summary>
+        /// Felhasználó törlése
+        /// </summary>
+        /// <param name="users">A felhasználók listája</param>
+        /// <returns>Az új felhasználók listája</returns>
         public static List<Users> DeleteUser(List<Users> users)
         {
             Console.Clear();

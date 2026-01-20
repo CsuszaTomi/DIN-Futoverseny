@@ -85,6 +85,9 @@ namespace DIN_Futóverseny.Controllers
         /// <summary>
         /// A thread.delay függvény meghívása, ha a delay engedélyezve van
         /// </summary>
+        /// <remarks>
+        /// Ez a függvény ellenőrzi a DelayEnabled beállítást, és ha az igaz, akkor meghívja a Thread.Sleep metódust az ActionDelay értékével.
+        /// </remarks>
         public static void Delay()
         {
             if (DelayEnabled)

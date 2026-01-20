@@ -234,7 +234,7 @@ namespace DIN_Futóverseny.Controllers
                 Console.Clear();
                 Text.WriteLine("Futások", "red");
                 Text.WriteLine("====================");
-                Tables.Table(new string[] {"Dátum","Távolság(km)", "Idő tartam(ó:p:m)","Max pulzus", "Nyugalmi pulzus", "Testsúly(kg)", "Átlag sebesség(km/h)"}, adatok.ToArray());
+                Tables.EdzesTablazatMegjelenites(adatok);
                 Text.WriteLine("");
             }
             catch (Exception e)
@@ -258,7 +258,7 @@ namespace DIN_Futóverseny.Controllers
           
                 Megjelenites(username, null);
 
-                Console.Write("\nAdd meg a törölni kívánt sorszámot: ");
+                Text.Write("\nAdd meg a törölni kívánt sorszámot: ");
                
                 int index=int.Parse(Console.ReadLine());
                 index = index - 1;
@@ -284,7 +284,7 @@ namespace DIN_Futóverseny.Controllers
                 
                     EdzesSave(osszesEdzes, null);
 
-                    Console.WriteLine("Sikeres törlés!");
+                    Text.WriteLine("Sikeres törlés!");
               
             }
             catch (Exception e)
@@ -304,10 +304,10 @@ namespace DIN_Futóverseny.Controllers
              
                 Megjelenites(username, null);
 
-                Console.Write("\nAdd meg a módosítani kívánt edzés sorszámát: ");
+                Text.Write("\nAdd meg a módosítani kívánt edzés sorszámát: ");
                 if (!int.TryParse(Console.ReadLine(), out int index))
                 {
-                    Console.WriteLine("Hibás adat! Számot adj meg.");
+                    Text.WriteLine("Hibás adat! Számot adj meg.");
                     return;
                 }
                 index = index - 1;
@@ -331,23 +331,25 @@ namespace DIN_Futóverseny.Controllers
                     while (!kilepes)
                     {
                         Console.Clear();
+                        Text.WriteLine("Futás módosítása", "red");
+                        Text.WriteLine("====================");
                         Text.WriteLine($"Kiválasztott edzés dátuma: {szerkesztendo.Datum.ToShortDateString()}", "green");
-                        Console.WriteLine("Mit szeretnél módosítani?");
-                        Console.WriteLine("1. Dátum");
-                        Console.WriteLine("2. Távolság");
-                        Console.WriteLine("3. Időtartam");
-                        Console.WriteLine("4. Max pulzus");
-                        Console.WriteLine("5. Nyugalmi pulzus");
-                        Console.WriteLine("6. Testsúly");
-                        Console.WriteLine("7. MENTÉS és Kilépés");
-                        Console.Write("\nVálassz menüpontot: ");
+                        Text.WriteLine("Mit szeretnél módosítani?");
+                        Text.WriteLine("1. Dátum");
+                        Text.WriteLine("2. Távolság");
+                        Text.WriteLine("3. Időtartam");
+                        Text.WriteLine("4. Max pulzus");
+                        Text.WriteLine("5. Nyugalmi pulzus");
+                        Text.WriteLine("6. Testsúly");
+                        Text.WriteLine("7. MENTÉS és Kilépés");
+                        Text.Write("Válassz menüpontot: ");
 
                         string menu = Console.ReadLine();
 
                         switch (menu)
                         {
                             case "1":
-                                Console.Write($"Jelenlegi: {szerkesztendo.Datum.ToShortDateString()}. \nAdd meg az újat (yyyy-mm-dd): ");
+                                Text.Write($"Jelenlegi: {szerkesztendo.Datum.ToShortDateString()}. \nAdd meg az újat (yyyy-mm-dd): ");
                                 string ujDatum = Console.ReadLine();
                                 while (!Ellenorzo.DateTimeEllenorzo(ujDatum))
                                 {
@@ -359,7 +361,7 @@ namespace DIN_Futóverseny.Controllers
                                 break;
 
                             case "2": 
-                                Console.Write($"Jelenlegi: {szerkesztendo.Tavolsag} km. \nAdd meg az újat: ");
+                                Text.Write($"Jelenlegi: {szerkesztendo.Tavolsag} km. \nAdd meg az újat: ");
                                 string ujTav = Console.ReadLine();
                                 while (!Ellenorzo.DecimalSzamEllenorzo(ujTav))
                                 {
@@ -371,7 +373,7 @@ namespace DIN_Futóverseny.Controllers
                                 break;
 
                             case "3": 
-                                Console.Write($"Jelenlegi: {szerkesztendo.Idotartam}. \nAdd meg az újat (óó:pp:mm): ");
+                                Text.Write($"Jelenlegi: {szerkesztendo.Idotartam}. \nAdd meg az újat (óó:pp:mm): ");
                                 string ujIdo = Console.ReadLine();
                                 while (!Ellenorzo.TimeSpanEllenorzo(ujIdo))
                                 {
@@ -383,7 +385,7 @@ namespace DIN_Futóverseny.Controllers
                                 break;
 
                             case "4": 
-                                Console.Write($"Jelenlegi: {szerkesztendo.Max_pulzus}. \nAdd meg az újat: ");
+                                Text.Write($"Jelenlegi: {szerkesztendo.Max_pulzus}. \nAdd meg az újat: ");
                                 string ujMaxP = Console.ReadLine();
                                 while (!Ellenorzo.IntSzamEllenorzo(ujMaxP))
                                 {
@@ -395,7 +397,7 @@ namespace DIN_Futóverseny.Controllers
                                 break;
 
                             case "5": 
-                                Console.Write($"Jelenlegi: {szerkesztendo.Nyug_pulzus}. \nAdd meg az újat: ");
+                                Text.Write($"Jelenlegi: {szerkesztendo.Nyug_pulzus}. \nAdd meg az újat: ");
                                 string ujNyugP = Console.ReadLine();
                                 while (!Ellenorzo.IntSzamEllenorzo(ujNyugP))
                                 {
@@ -407,7 +409,7 @@ namespace DIN_Futóverseny.Controllers
                                 break;
 
                             case "6": 
-                                Console.Write($"Jelenlegi: {szerkesztendo.Testsuly} kg. \nAdd meg az újat: ");
+                                Text.Write($"Jelenlegi: {szerkesztendo.Testsuly} kg. \nAdd meg az újat: ");
                                 string ujSuly = Console.ReadLine();
                                 while (!Ellenorzo.DoubleEllenorzo(ujSuly))
                                 {
@@ -423,7 +425,7 @@ namespace DIN_Futóverseny.Controllers
                                 break;
 
                             default:
-                                Console.WriteLine("Nincs ilyen opció.");
+                                Text.WriteLine("Nincs ilyen opció.");
                                 break;
                         }
                     }
