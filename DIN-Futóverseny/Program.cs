@@ -12,6 +12,7 @@ namespace DIN_Futóverseny
 {
     internal class Program
     {
+        //1 750
         static List<Edzes_adatok> adatok = EdzesekAdatfeldolgozas.EdzesFeldolgozo();
         static Users loggeduser = null;
         static List<Users> Users = UserActions.GetUsers();
