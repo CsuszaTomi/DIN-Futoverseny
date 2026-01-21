@@ -82,14 +82,22 @@ namespace DIN_Futóverseny.Controllers
                 Text.Write("Kérem a futás dátumát (yyyy-mm-dd) formátumban: ");
                 //DateTime datum = DateTime.Parse(Console.ReadLine());
                 string datum = Console.ReadLine();
-                while(!Ellenorzo.DateTimeEllenorzo(datum))
+                if (datum == "")
+                {
+                    datum = DateTime.Now.ToString("yyyy-MM-dd");
+                }
+                while (!Ellenorzo.DateTimeEllenorzo(datum))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ","red");
                     datum = Console.ReadLine();
                 }
 
                 Text.Write("Kérem a futott távolságot (km): ");
-                string tav = (Console.ReadLine());
+                string tav = Console.ReadLine();
+                if (tav == "")
+                {
+                    return adatok;
+                }
                 while (!Ellenorzo.DecimalSzamEllenorzo(tav))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ", "red");
@@ -98,6 +106,10 @@ namespace DIN_Futóverseny.Controllers
 
                 Text.Write("Kérem az időtatamot (óó:pp:mm) formátumban: ");
                 string idotartam = Console.ReadLine();
+                if(idotartam == "")
+                {
+                    return adatok;
+                }
                 while(!Ellenorzo.TimeSpanEllenorzo(idotartam))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ", "red");
@@ -106,6 +118,10 @@ namespace DIN_Futóverseny.Controllers
 
                 Text.Write("Kérem a maximális pulzus adatot: ");
                 string m_pulzus = Console.ReadLine();
+                if (m_pulzus == "")
+                {
+                    return adatok;
+                }
                 while (!Ellenorzo.IntSzamEllenorzo(m_pulzus))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ", "red");
@@ -114,6 +130,10 @@ namespace DIN_Futóverseny.Controllers
 
                 Text.Write("Kérem a futás utáni nyugalmi pulzust: ");
                 string n_pulzus = Console.ReadLine();
+                if (n_pulzus == "")
+                {
+                    return adatok;
+                }
                 while (!Ellenorzo.IntSzamEllenorzo(n_pulzus))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ", "red");
@@ -122,6 +142,10 @@ namespace DIN_Futóverseny.Controllers
 
                 Text.Write("Kérem a futás utáni testsúlyt (kg): ");
                 string testsuly = Console.ReadLine();
+                if (testsuly == "")
+                {
+                    return adatok;
+                }
                 while (!Ellenorzo.DoubleEllenorzo(testsuly))
                 {
                     Text.Write("Hibás formátum! Add meg újra: ", "red");

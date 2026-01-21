@@ -74,10 +74,10 @@ namespace DIN_Futóverseny
                                     case 5:
                                         Users = UserActions.FiokAdatModositas(Users, loggeduser);
                                         break;
-                                    case 7:
+                                    case 6:
                                         lefutasIdo = EdzesekAdatfeldolgozas.LefutasiIdoBeallitas(loggeduser);
                                         break;
-                                    case 8:
+                                    case 7:
                                         exit = true;
                                         break;
                                 }
