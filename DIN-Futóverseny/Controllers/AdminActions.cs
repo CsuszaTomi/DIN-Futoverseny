@@ -60,5 +60,32 @@ namespace DIN_Futóverseny.Controllers
             }
             return users;
         }
+
+        public static void DeleteRuns(List<Edzes_adatok> osszesEdzes)
+        {
+            Text.WriteLine("Összes futás:", "red");
+            for (int i = 0; i < osszesEdzes.Count; i++)
+            {
+                var edzes = osszesEdzes[i];
+                Text.WriteLine($"{i + 1}. {edzes.Nev} - {edzes.Datum.ToShortDateString()} - {edzes.Tavolsag} km", "yellow");
+            }
+
+            Text.Write("\nAdd meg a törölni kívánt futás sorszámát: ");
+            int index = int.Parse(Console.ReadLine()) - 1;
+
+            if (index < 0 || index >= osszesEdzes.Count)
+            {
+                Text.WriteLine("Hibás sorszám!", "red");
+                return;
+            }
+
+            Edzes_adatok torlendo = osszesEdzes[index];
+            osszesEdzes.Remove(torlendo);
+
+            EdzesekAdatfeldolgozas.EdzesSave(osszesEdzes, null);
+
+            Text.WriteLine($"Sikeresen törölted {torlendo.Nev} {torlendo.Datum.ToShortDateString()} futását!", "green");
+        }
+
     }
 }
