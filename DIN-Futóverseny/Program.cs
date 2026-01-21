@@ -44,6 +44,8 @@ namespace DIN_Futóverseny
                                         break;
                                     case 1:
                                         //Statisztika megjelenítése 
+                                        adatok = EdzesekAdatfeldolgozas.EdzesIdobeliRendezo(adatok);
+                                        EdzesekAdatfeldolgozas.EdzesSave(adatok, loggeduser);
                                         EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev, adatok);
                                         Console.ReadLine();
                                         break;
@@ -78,27 +80,10 @@ namespace DIN_Futóverseny
                         }
                         else if(AdminLogin == true)
                         {
-                            bool exitAdmin = false;
-                            while (!exitAdmin)
-                            {
-                                int adminMenu = Text.ArrowMenu(new string[] { "Felhasználók listázása", "Felhasználó törlése","Futások törlése", "Kilépés" }, "Admin felület");
-                                switch (adminMenu)
-                                {
-                                    case 0:
-                                        AdminActions.ListUsers(Users);
-                                        break;
-                                    case 1:
-                                        Users = AdminActions.DeleteUser(Users);
-                                        UserActions.UserSave(Users);
-                                        break;
-                                    case 2:
-                                        AdminActions.DeleteRuns(adatok);
-                                        break;
-                                    case 3:
-                                        exitAdmin = true;
-                                        break;
-                                }
-                            }
+                            Text.WriteLine("Sikeres admin belépés!", "green");
+                            Settings.Delay();
+                            AdminActions.AdminMenu(Users, adatok);
+                            AdminLogin = false;
                         }
                         else
                         {

@@ -40,6 +40,24 @@ namespace DIN_Futóverseny.Controllers
         }
 
         /// <summary>
+        /// Visszaadja a megadott nevű felhasználó objektumát
+        /// </summary>
+        /// <param name="username">A felhasználó neve</param>
+        /// <returns>A megadott nevű felhasználó objektuma, vagy null, ha nem található</returns>
+        public static Users GetUser(string username)
+        {
+            List<Users> users = GetUsers();
+            foreach (Users user in users)
+            {
+                if (user.Nev == username)
+                {
+                    return user;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Új felhasználó regisztrációja
         /// </summary>
         /// <param name="users">A felhasználók listája</param>
@@ -51,7 +69,11 @@ namespace DIN_Futóverseny.Controllers
             Text.WriteLine("====================");
             Text.Write("Név: ");
             string nev = Console.ReadLine();
-            while(!Ellenorzo.UressegEllenorzo(nev))
+            if (nev == "")
+            {
+                return users;
+            }
+            while (!Ellenorzo.UressegEllenorzo(nev))
             {
                 Text.WriteLine("A név nem lehet üres!", "red");
                 Text.Write("Név: ");
@@ -68,6 +90,10 @@ namespace DIN_Futóverseny.Controllers
             }
             Text.Write("Jelszó: ");
             string jelszo = Console.ReadLine();
+            if (jelszo == "")
+            {
+                return users;
+            }
             while (!Ellenorzo.UressegEllenorzo(jelszo))
             {
                 Text.WriteLine("A jelszó nem lehet üres!", "red");
@@ -76,6 +102,10 @@ namespace DIN_Futóverseny.Controllers
             }
             Text.Write("Születési dátum (yyyy-mm-dd): ");
             string szuldatum = Console.ReadLine();
+            if (szuldatum == "")
+            {
+                return users;
+            }
             while (!Ellenorzo.DateTimeEllenorzo(szuldatum))
             {
                 Text.WriteLine("Érvénytelen születési dátum!", "red");
@@ -84,6 +114,10 @@ namespace DIN_Futóverseny.Controllers
             }
             Text.Write("Testsúly (kg): ");
             string testsuly = Console.ReadLine();
+            if (testsuly == "")
+            {
+                return users;
+            }
             while (!Ellenorzo.DoubleEllenorzo(testsuly))
             {
                 Text.WriteLine("Érvénytelen testsúly!", "red");
@@ -92,6 +126,10 @@ namespace DIN_Futóverseny.Controllers
             }
             Text.Write("Magasság (cm): ");
             string magassag = Console.ReadLine();
+            if (magassag == "")
+            {
+                return users;
+            }
             while (!Ellenorzo.DoubleEllenorzo(magassag))
             {
                 Text.WriteLine("Érvénytelen magasság!", "red");
@@ -100,6 +138,10 @@ namespace DIN_Futóverseny.Controllers
             }
             Text.Write("Nyugalmi pulzus (bpm): ");
             string nyugpul = Console.ReadLine();
+            if (nyugpul == "")
+            {
+                return users;
+            }
             while (!Ellenorzo.DoubleEllenorzo(nyugpul))
             {
                 Text.WriteLine("Érvénytelen nyugalmi pulzus!", "red");
@@ -108,6 +150,10 @@ namespace DIN_Futóverseny.Controllers
             }
             Text.Write("Általános futás cél km-ben: ");
             string altcel = Console.ReadLine();
+            if (altcel == "")
+            {
+                return users;
+            }
             while (!Ellenorzo.DoubleEllenorzo(altcel))
             {
                 Text.WriteLine("Érvénytelen általános futás cél!", "red");
