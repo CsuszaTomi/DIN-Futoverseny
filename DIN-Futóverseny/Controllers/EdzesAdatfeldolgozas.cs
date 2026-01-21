@@ -294,7 +294,7 @@ namespace DIN_Futóverseny.Controllers
         /// </summary>
         /// <param name="username">A törölni kívánt edzés felhasználóneve</param>
         /// <param name="useredzesek">A felhasználó edzései</param>
-        public static void Torol(string username, List<Edzes_adatok> useredzesek)
+        public static List<Edzes_adatok> Torol(string username, List<Edzes_adatok> useredzesek)
         {
             try
             {
@@ -328,11 +328,12 @@ namespace DIN_Futóverseny.Controllers
                     EdzesSave(osszesEdzes, null);
 
                     Text.WriteLine("Sikeres törlés!");
-              
+                    return osszesEdzes;
             }
             catch (Exception e)
             {
                 Console.WriteLine("Hiba történt: " + e.Message);
+                return null;
             }
         }
 
@@ -492,6 +493,7 @@ namespace DIN_Futóverseny.Controllers
                 osszesEdzes.Remove(szerkesztendo);
                 osszesEdzes.Add(szerkesztendo);
                 EdzesSave(osszesEdzes, user);
+
             }
             catch (Exception e)
             {

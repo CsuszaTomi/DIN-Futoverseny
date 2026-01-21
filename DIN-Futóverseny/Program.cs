@@ -22,6 +22,7 @@ namespace DIN_Futóverseny
         {
             while (true)
             {
+                Users = UserActions.GetUsers();
                 int menu = Text.ArrowMenu(new string[] { "Új fiók", "Bejelentkezés","Beállítások" ,"Kilépés" }, "Futás Nyilvántartó");
                 switch(menu)
                 {
@@ -59,7 +60,7 @@ namespace DIN_Futóverseny
                                         switch (kezelomenu)
                                         {
                                             case 0:
-                                                EdzesekAdatfeldolgozas.Torol(loggeduser.Nev, adatok);
+                                                adatok = EdzesekAdatfeldolgozas.Torol(loggeduser.Nev, adatok);
                                                 break;
                                             case 1:
                                                 EdzesekAdatfeldolgozas.Modosit(loggeduser.Nev);
