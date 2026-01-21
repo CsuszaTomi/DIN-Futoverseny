@@ -196,16 +196,20 @@ namespace DIN_Futóverseny.Controllers
         /// </summary>
         /// <param name="edzesek">A felhasználó edzései</param>
         /// <param name="user">A bejelentkezett felhasználó</param>
-        public static void Statisztikak(List<Edzes_adatok> edzesek, Users user)
+        public static void Statisztikak(List<Edzes_adatok> edzesek, Users user, double lefutasido)
         {
             Console.Clear();
             Text.WriteLine("Statisztikák", "red");
             Text.WriteLine("====================");
             double atlagSebesseg = AtlagSebesseg(edzesek, user);
             Text.WriteLine($"Az átlagos futási sebességed: {atlagSebesseg:F2} km/h");
-            Text.WriteLine($"A célodnak({user.Altcel} km/futás) ennyiszer feleltél meg: {Szamlalo(user)}/{EdzesSzamlalo(user)}");
+            Text.WriteLine($"A személyes célodnak({user.Altcel} km/futás) ennyiszer feleltél meg: {Szamlalo(user)}/{EdzesSzamlalo(user)}");
             Text.WriteLine($"Összesen ennyit futottál: {Ossz(user.Nev)} km");
             Text.WriteLine($"Összes edzésidőd(nap:óra:perc:másodperc): {OsszEdzesIdo(user.Nev)}");
+            //verseny cél
+            int sikerult = FeladatSzamlalo(user, lefutasido);
+            int osszes = EdzesSzamlalo(user);
+            Text.WriteLine($"Verseny célon belüli tempójú edzések: {sikerult}/{osszes} alkalommal", sikerult > 0 ? "green" : "white");
             Text.WriteLine("Enterrel vissza.....", "yellow");
             Console.ReadLine();
         }
@@ -564,6 +568,56 @@ namespace DIN_Futóverseny.Controllers
                         }
                 }
                 
+            }
+            return hanyszor;
+        }
+
+        public static double LefutasiIdoBeallitas(Users user)
+        {
+            Console.Clear();
+            Text.WriteLine("5km lefutási ideje", "red");
+            Text.WriteLine("========================");
+            Text.Write("Add meg a cél lefutási időt (percben, alapértelmezett 20 perc): ");
+            string lefutasiIdo = Console.ReadLine();
+            if (lefutasiIdo == "")
+            {
+                lefutasiIdo = "20";
+            }
+            while (!Ellenorzo.DoubleEllenorzo(lefutasiIdo))
+            {
+                Text.Write("Hibás formátum! Add meg újra: ", "red");
+                lefutasiIdo = Console.ReadLine();
+            }
+            return double.Parse(lefutasiIdo);
+        }
+
+        /// <summary>
+        /// Kiszámolja, hányszor sikerült az edzés tempója alapján a célidőn belül futni 5 km-t.
+        /// </summary>
+        /// <param name="user">A felhasználó</param>
+        /// <returns>A célidőn belül 5 km-t futott edzések száma</returns>
+        public static int FeladatSzamlalo(Users user,double lefutasIdo)
+        {
+            List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
+            int hanyszor = 0;
+            double celIdo5kmPerc = lefutasIdo;
+
+            foreach (Edzes_adatok edzes in osszesEdzes)
+            {
+                if (edzes.Nev == user.Nev)
+                {
+                    double vatlag = EdzesAtlagSebesseg(edzes); // km/h
+
+                    if (vatlag > 0)
+                    {
+                        double szamitottIdo5kmPerc = (5.0 / vatlag) * 60;
+
+                        if (szamitottIdo5kmPerc <= celIdo5kmPerc)
+                        {
+                            hanyszor++;
+                        }
+                    }
+                }
             }
             return hanyszor;
         }

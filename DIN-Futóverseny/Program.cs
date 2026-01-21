@@ -17,6 +17,7 @@ namespace DIN_Futóverseny
         static Users loggeduser = null;
         static List<Users> Users = UserActions.GetUsers();
         public static bool AdminLogin = false;
+        public static double lefutasIdo = 20.0;
         static void Main(string[] args)
         {
             while (true)
@@ -36,7 +37,7 @@ namespace DIN_Futóverseny
                             bool exit = false;
                             while (!exit)
                             {
-                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások", "Statisztikák", "Futások kezelése", "Átlag sebesség változása", "Fiók kezelés", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
+                                int edzesMenu = Text.ArrowMenu(new string[] { "Új futás rögzítése", "Futások", "Statisztikák", "Futások kezelése", "Átlag sebesség változása", "Fiók kezelés","5km lefutási idejének állítása", "Kilépés" }, $"Üdvözöljük {loggeduser.Nev}!");
                                 switch (edzesMenu)
                                 {
                                     case 0:
@@ -51,7 +52,7 @@ namespace DIN_Futóverseny
                                         Console.ReadLine();
                                         break;
                                     case 2:
-                                        EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser);
+                                        EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser,lefutasIdo);
                                         break;
                                     case 3:
                                         int kezelomenu = Text.ArrowMenu(new string[] { "Futás törlése", "Futás módosítása", "Vissza" }, "Futás szerkesztés");
@@ -73,7 +74,10 @@ namespace DIN_Futóverseny
                                     case 5:
                                         Users = UserActions.FiokAdatModositas(Users, loggeduser);
                                         break;
-                                    case 6:
+                                    case 7:
+                                        lefutasIdo = EdzesekAdatfeldolgozas.LefutasiIdoBeallitas(loggeduser);
+                                        break;
+                                    case 8:
                                         exit = true;
                                         break;
                                 }
