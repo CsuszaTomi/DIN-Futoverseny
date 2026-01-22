@@ -17,7 +17,7 @@ namespace DIN_Futóverseny
         static Users loggeduser = null;
         static List<Users> Users = UserActions.GetUsers();
         public static bool AdminLogin = false;
-        public static double lefutasIdo = 20.0;
+        public static TimeSpan lefutasIdo = TimeSpan.Parse("00:20:00");
         static void Main(string[] args)
         {
             while (true)
