@@ -572,10 +572,84 @@ namespace DIN_Futóverseny.Controllers
             Console.ReadLine() ;    
         }
 
-        public static List<Edzes_adatok> EdzesIdobeliRendezo(List<Edzes_adatok> edzesek)
+        /// <summary>
+        /// Adott felhasználó edzéseinek átlagos súly és pulzus változásának kiíratása
+        /// </summary>
+        /// <param name="username">A felhasználó neve</param>
+        public static void Atlagsulybpmvaltozasa(string username)
         {
-            List<Edzes_adatok> rendezettEdzesek = edzesek.OrderByDescending(edzes => edzes.Datum).ToList();
-            return rendezettEdzesek;
+            List<Edzes_adatok> osszesEdzes = EdzesFeldolgozo();
+            osszesEdzes = EdzesIdobeliRendezo(osszesEdzes,true);
+            Console.Clear();
+            Text.WriteLine("Átlagos súly és pulzus változás", "red");
+            Text.WriteLine("============================");
+
+            List<Edzes_adatok> sajatEdzesek = new List<Edzes_adatok>();
+            foreach (var edzes in osszesEdzes)
+            {
+                if (edzes.Nev == username) sajatEdzesek.Add(edzes);
+            }
+
+            for (int i = 0; i < sajatEdzesek.Count; i++)
+            {
+                Edzes_adatok mostani = sajatEdzesek[i];
+                Text.WriteLine($"{i + 1}. Súly: {mostani.Testsuly:F2} , Pulzus: {mostani.Nyug_pulzus}");
+                if (i > 0)
+                {
+                    Edzes_adatok elozo = sajatEdzesek[i - 1];
+                    double sulyDiff = mostani.Testsuly - elozo.Testsuly;
+                    double pulzusDiff = mostani.Nyug_pulzus - elozo.Nyug_pulzus;
+
+                    //Mindkettő nő
+                    if (sulyDiff > 0 && pulzusDiff > 0)
+                    {
+                        Text.WriteLine($"Ez az előzőhöz képest: {sulyDiff:F2} kg-val nagyobb a testsúly és nagyobb a pulzus {pulzusDiff:F2} bpm-mel.", "red");
+                    }
+                    //Mindkettő csökken
+                    else if (sulyDiff < 0 && pulzusDiff < 0)
+                    {
+                        Text.WriteLine($"Ez az előzőhöz képest: {Math.Abs(sulyDiff):F2} kg-val kisebb a testsúly és csökkent a pulzus {Math.Abs(pulzusDiff):F2} bpm-mel.", "green");
+                    }
+                    //Súly nőtt, pulzus csökkent
+                    else if (sulyDiff > 0 && pulzusDiff < 0)
+                    {
+                        Text.WriteLine($"Vegyes eredmény: {sulyDiff:F2} kg-val nőtt a súly, de a pulzus javult (csökkent) {Math.Abs(pulzusDiff):F2} bpm-mel.", "yellow2");
+                    }
+                    //Súly csökkent, pulzus nőtt
+                    else if (sulyDiff < 0 && pulzusDiff > 0)
+                    {
+                        Text.WriteLine($"Vegyes eredmény: {Math.Abs(sulyDiff):F2} kg-val csökkent a súly, de a pulzus emelkedett {pulzusDiff:F2} bpm-mel.", "yellow2");
+                    }
+                    //Egyező értékek
+                    else
+                    {
+                        string uzenet = "Nincs jelentős változás.";
+                        if (sulyDiff == 0 && pulzusDiff == 0) 
+                            uzenet = "Teljesen megegyezik az előzővel.";
+                        else if (sulyDiff == 0) 
+                            uzenet = $"A súly változatlan, a pulzus változása: {pulzusDiff:F2} bpm.";
+                        else if (pulzusDiff == 0)
+                            uzenet = $"A pulzus változatlan, a súly változása: {sulyDiff:F2} kg.";
+                        Text.WriteLine(uzenet, "blue");
+                    }
+                }
+            }
+            Text.WriteLine("Enterrel vissza...", "yellow");
+            Console.ReadLine();
+        }
+
+        public static List<Edzes_adatok> EdzesIdobeliRendezo(List<Edzes_adatok> edzesek,bool asc)
+        {
+            if(!asc)
+            {
+                List<Edzes_adatok> rendezettEdzesek = edzesek.OrderByDescending(edzes => edzes.Datum).ToList();
+                return rendezettEdzesek;
+            }
+            else
+            {
+                List<Edzes_adatok> rendezettEdzesek = edzesek.OrderBy(edzes => edzes.Datum).ToList();
+                return rendezettEdzesek;
+            }
         }
 
         /// <summary>
