@@ -242,7 +242,7 @@ namespace DIN_Futóverseny.Controllers
         /// Edzés adatok megjelenítése
         /// </summary>
         /// <param name="username">A bejelentkezett felhasználó neve</param>
-        public static void Megjelenites(string username, List<Edzes_adatok> useredzesek)
+        public static void Megjelenites(string username)
         {
             try
             {           
@@ -299,7 +299,7 @@ namespace DIN_Futóverseny.Controllers
             try
             {
           
-                Megjelenites(username, null);
+                Megjelenites(username);
 
                 Text.Write("\nAdd meg a törölni kívánt sorszámot: ");
                
@@ -365,7 +365,7 @@ namespace DIN_Futóverseny.Controllers
             try
             {
              
-                Megjelenites(username, null);
+                Megjelenites(username);
 
                 Text.Write("\nAdd meg a módosítani kívánt edzés sorszámát: ");
                 if (!int.TryParse(Console.ReadLine(), out int index))

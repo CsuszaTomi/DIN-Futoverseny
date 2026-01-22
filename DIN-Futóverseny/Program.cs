@@ -49,8 +49,25 @@ namespace DIN_Futóverseny
                                         //Statisztika megjelenítése 
                                         adatok = EdzesekAdatfeldolgozas.EdzesIdobeliRendezo(adatok, false);
                                         EdzesekAdatfeldolgozas.EdzesSave(adatok, loggeduser);
-                                        EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev, adatok);
-                                        Console.ReadLine();
+                                        bool megnezes = true;
+                                        while (megnezes)
+                                        {
+                                            int rendezeschoice = Text.ArrowMenuTable(new string[] { "Növekvő rendezés", "Csökkenő rendezés", "Kilépés" }, "Rendezés", () => EdzesekAdatfeldolgozas.Megjelenites(loggeduser.Nev));
+                                            switch(rendezeschoice)
+                                            {
+                                                case 0:
+                                                    adatok = EdzesekAdatfeldolgozas.EdzesIdobeliRendezo(adatok, false);
+                                                    EdzesekAdatfeldolgozas.EdzesSave(adatok, loggeduser);
+                                                    break;
+                                                case 1:
+                                                    adatok = EdzesekAdatfeldolgozas.EdzesIdobeliRendezo(adatok, true);
+                                                    EdzesekAdatfeldolgozas.EdzesSave(adatok, loggeduser);
+                                                    break;
+                                                case 2:
+                                                    megnezes = false;
+                                                    break;
+                                            }
+                                        }                                       
                                         break;
                                     case 2:
                                         EdzesekAdatfeldolgozas.Statisztikak(adatok, loggeduser,lefutasIdo);

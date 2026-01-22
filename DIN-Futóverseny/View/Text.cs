@@ -125,5 +125,55 @@ namespace DIN_Futóverseny.Models
             } while (!valasztott);
             return kivalasztottmenupont;
         }
+
+        public static int ArrowMenuTable(string[] menupontok, string cím,Action tabledraw)
+        {
+            int kivalasztottmenupont = 0;
+            bool valasztott = false;
+            do
+            {
+                Console.Clear();
+                tabledraw();
+                Text.WriteLine(cím, "red");
+                Text.WriteLine("====================");
+                for (int i = 0; i < menupontok.Length; i++)
+                {
+                    if (i == kivalasztottmenupont)
+                    {
+                        Text.WriteLine($"> {menupontok[i]}", "green");
+                    }
+                    else
+                    {
+                        Text.WriteLine($"  {menupontok[i]}");
+                    }
+                }
+                Text.WriteLine("====================");
+                switch (Console.ReadKey(true).Key)
+                {
+                    case ConsoleKey.Enter:
+                        valasztott = true;
+                        break;
+                    case ConsoleKey.E:
+                        valasztott = true;
+                        break;
+                    case ConsoleKey.UpArrow:
+                        if (kivalasztottmenupont > 0) kivalasztottmenupont--;
+                        break;
+                    case ConsoleKey.W:
+                        if (kivalasztottmenupont > 0) kivalasztottmenupont--;
+                        break;
+                    case ConsoleKey.DownArrow:
+                        if (kivalasztottmenupont < menupontok.Length - 1) kivalasztottmenupont++;
+                        break;
+                    case ConsoleKey.S:
+                        if (kivalasztottmenupont < menupontok.Length - 1) kivalasztottmenupont++;
+                        break;
+                    default:
+                        Console.Beep();
+                        break;
+                }
+            } while (!valasztott);
+            return kivalasztottmenupont;
+        }
     }
 }
