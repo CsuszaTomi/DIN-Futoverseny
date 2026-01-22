@@ -638,6 +638,12 @@ namespace DIN_Futóverseny.Controllers
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// Edzések időbeli rendezése
+        /// </summary>
+        /// <param name="edzesek">Az összes edzés</param>
+        /// <param name="asc">Igaz vagy hamis érték, ha igaz akkor növekvő, ha hamis csökkenő a sorrend</param>
+        /// <returns>A rendezett edzések lista</returns>
         public static List<Edzes_adatok> EdzesIdobeliRendezo(List<Edzes_adatok> edzesek,bool asc)
         {
             if(!asc)
